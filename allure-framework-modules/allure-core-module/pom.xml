@@ -10,7 +10,7 @@
         <version>2.0.0</version>
     </parent>
     <artifactId>allure-core-module</artifactId>
-    <version>4.12.0.4-SNAPSHOT</version>
+    <version>4.12.0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>AllureTestFramework - Test core - Module</name>
     <description>Allure Test Framework Core is responsible for:
@@ -78,7 +78,7 @@ Based on Junit4.12</description>
         <allure.report.directory>${pom.basedir}/target/</allure.report.directory>
         <allure.version>1.5.4</allure.version>
         <allure-report.version>1.4.19</allure-report.version>
-        <aspectj.version>1.8.9</aspectj.version>
+        <aspectj.version>1.8.10</aspectj.version>
         <allure-maven-plugin.version>2.6</allure-maven-plugin.version>
         <allure-cucumber-jvm-adaptor.version>1.6.3</allure-cucumber-jvm-adaptor.version>
         <report-directory>${pom.basedir}/test-output/</report-directory>
@@ -112,24 +112,38 @@ Based on Junit4.12</description>
             <version>${commons-csv.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
-
-
         <!--This dependency is necessary for JUnit plugin. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- To run tests on IDE such as Eclipse, Intellij -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version><!--$NO-MVN-MAN-VER$ -->
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
-            <version>${JUnitParams.version}</version><!--$NO-MVN-MAN-VER$ -->
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-surefire-provider</artifactId>
             <version>${surefire.provider.version}</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>${JUnitParams.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
