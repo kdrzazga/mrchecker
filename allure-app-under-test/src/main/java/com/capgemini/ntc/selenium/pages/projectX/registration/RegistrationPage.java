@@ -17,30 +17,30 @@ import com.capgemini.ntc.test.core.logger.BFLogger;
 
 public class RegistrationPage extends BasePage {
 	
-	private BasePage parent;
-	private boolean loaded;
+	private BasePage	parent;
+	private boolean		loaded;
 	
-	private final static By selectorFirstName = By.cssSelector("input[id='name_3_firstname']");
-	private final static By selectorLastName = By.cssSelector("input[id='name_3_lastname']");
-	private final static By selectorMaritalStatus = By.cssSelector("div[class='radio_wrap']");
-	private final static By selectorHobby = By.cssSelector("li.fields.pageFields_1:nth-child(3) div.radio_wrap");
-	private final static By selectorCountry = By.cssSelector("select[id='dropdown_7']");
-	private final static By selectorBirthDateDay = By.cssSelector("select[id='dd_date_8']");
-	private final static By selectorBirthDateMonth = By.cssSelector("select[id='mm_date_8']");
-	private final static By selectorBirthDateYear = By.cssSelector("select[id='yy_date_8']");
-	private final static By selectorPhoneNumber = By.cssSelector("input[id='phone_9']");
-	private final static By selectorUsername = By.cssSelector("input[id='username']");
-	private final static By selectorEmail = By.cssSelector("input[id='email_1']");
-	private final static By selectorYourProfilePhotoPath = By.cssSelector("input[type='file']");
-	private final static By selectorAboutYourself = By.cssSelector("textarea[ id='description' ]");
-	private final static By selectorPassword = By.cssSelector("input[id='password_2']");
-	private final static By selectorConfirmPassword = By.cssSelector("input[id='confirm_password_password_2']");
-	private final static By selectorSubmitButton = By.cssSelector("input[name='pie_submit']");
-	private final static By selectorRegistrationSucceed = By.cssSelector("p[class='piereg_message']");
-	private final static By selectorRegistrationError = By.cssSelector("p[class='piereg_login_error']");
+	private final static By	selectorFirstName				= By.cssSelector("input[id='name_3_firstname']");
+	private final static By	selectorLastName				= By.cssSelector("input[id='name_3_lastname']");
+	private final static By	selectorMaritalStatus			= By.cssSelector("div[class='radio_wrap']");
+	private final static By	selectorHobby					= By.cssSelector("li.fields.pageFields_1:nth-child(3) div.radio_wrap");
+	private final static By	selectorCountry					= By.cssSelector("select[id='dropdown_7']");
+	private final static By	selectorBirthDateDay			= By.cssSelector("select[id='dd_date_8']");
+	private final static By	selectorBirthDateMonth			= By.cssSelector("select[id='mm_date_8']");
+	private final static By	selectorBirthDateYear			= By.cssSelector("select[id='yy_date_8']");
+	private final static By	selectorPhoneNumber				= By.cssSelector("input[id='phone_9']");
+	private final static By	selectorUsername				= By.cssSelector("input[id='username']");
+	private final static By	selectorEmail					= By.cssSelector("input[id='email_1']");
+	private final static By	selectorYourProfilePhotoPath	= By.cssSelector("input[type='file']");
+	private final static By	selectorAboutYourself			= By.cssSelector("textarea[ id='description' ]");
+	private final static By	selectorPassword				= By.cssSelector("input[id='password_2']");
+	private final static By	selectorConfirmPassword			= By.cssSelector("input[id='confirm_password_password_2']");
+	private final static By	selectorSubmitButton			= By.cssSelector("input[name='pie_submit']");
+	private final static By	selectorRegistrationSucceed		= By.cssSelector("p[class='piereg_message']");
+	private final static By	selectorRegistrationError		= By.cssSelector("p[class='piereg_login_error']");
 	
-	private static String registrationSucceedText = "Thank you for your registration";
-	private static String registrationErrorText = "Error: Username already exists";
+	private static String	registrationSucceedText	= "Thank you for your registration";
+	private static String	registrationErrorText	= "Error: Username already exists";
 	
 	private final String pattern = "(.*)-(.*)-(.*)";
 	
@@ -128,13 +128,13 @@ public class RegistrationPage extends BasePage {
 	}
 	
 	public void setFirstName(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorFirstName);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorFirstName);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setLastName(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorLastName);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorLastName);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
@@ -142,25 +142,25 @@ public class RegistrationPage extends BasePage {
 	public void setMaritalStatus(MaritalStatus maritalStatus) {
 		
 		switch (maritalStatus) {
-		case SINGLE: {
-			getDriver().elementRadioButton(selectorMaritalStatus)
-					.selectItemByValue("single");
-			
-			// radioButtonElement.selectElement("Single");
-			break;
-		}
-		case MARRIED: {
-			getDriver().elementRadioButton(selectorMaritalStatus)
-					.selectItemByValue("married");
-			// radioButtonElement.selectElement("Married");
-			break;
-		}
-		case DIVORCED: {
-			getDriver().elementRadioButton(selectorMaritalStatus)
-					.selectItemByValue("divorced");
-			// radioButtonElement.selectElement("Divorced");
-			break;
-		}
+			case SINGLE: {
+				getDriver().elementRadioButton(selectorMaritalStatus)
+						.selectItemByValue("single");
+				
+				// radioButtonElement.selectElement("Single");
+				break;
+			}
+			case MARRIED: {
+				getDriver().elementRadioButton(selectorMaritalStatus)
+						.selectItemByValue("married");
+				// radioButtonElement.selectElement("Married");
+				break;
+			}
+			case DIVORCED: {
+				getDriver().elementRadioButton(selectorMaritalStatus)
+						.selectItemByValue("divorced");
+				// radioButtonElement.selectElement("Divorced");
+				break;
+			}
 		}
 	}
 	
@@ -197,42 +197,42 @@ public class RegistrationPage extends BasePage {
 	}
 	
 	public void setPhoneNumber(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorPhoneNumber);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorPhoneNumber);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setUsername(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorUsername);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorUsername);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setEmail(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorEmail);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorEmail);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setProfilePicture(String value) {
-		getDriver().findElement(selectorYourProfilePhotoPath)
+		getDriver().findElementDynamic(selectorYourProfilePhotoPath)
 				.sendKeys(value);
 	}
 	
 	public void setAboutYourself(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorAboutYourself);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorAboutYourself);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setPassword(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorPassword);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorPassword);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}
 	
 	public void setConfirmPassword(String value) {
-		InputTextElement inputTextElement = new InputTextElement(selectorConfirmPassword);
+		InputTextElement inputTextElement = getDriver().elementInputText(selectorConfirmPassword);
 		inputTextElement.clearInputText();
 		inputTextElement.setInputText(value);
 	}

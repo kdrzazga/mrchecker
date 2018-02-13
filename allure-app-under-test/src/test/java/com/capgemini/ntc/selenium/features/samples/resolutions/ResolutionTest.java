@@ -45,7 +45,7 @@ public class ResolutionTest extends BaseTest {
 		ResolutionUtils.setResolution(BasePage.getDriver(), resolutionEnum);
 		
 		assertThat(true, is(registryPage.isButtonSubmitDisplayed()));
-		TimeUnit.SECONDS.sleep(1); // This is for demo. Do not do it at home
+		TimeUnit.SECONDS.sleep(3); // This is for demo. Do not do it at home
 		
 	}
 	
