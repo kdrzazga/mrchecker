@@ -18,6 +18,7 @@ import com.capgemini.ntc.selenium.pages.projectX.registration.RegistryPage;
 import com.capgemini.ntc.test.core.BaseTest;
 
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import ru.yandex.qatools.allure.annotations.Features;
 
 @Features("Resolution")
@@ -28,9 +29,9 @@ public class ResolutionTest extends BaseTest {
 	
 	private static Object[] getResolutions() {
 		return new Object[] {
-				ResolutionEnum.w768,
-				ResolutionEnum.w960,
-				ResolutionEnum.w1920 };
+						ResolutionEnum.iPhoneX,
+						ResolutionEnum.SamsungGalaxyTab10,
+						ResolutionEnum.w1920 };
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class ResolutionTest extends BaseTest {
 		registryPage = new RegistryPage();
 	}
 	
-	@junitparams.Parameters(method = "getResolutions")
+	@Parameters(method = "getResolutions")
 	@Test
 	public void resolution_test(ResolutionEnum resolutionEnum) throws InterruptedException {
 		ResolutionUtils.setResolution(BasePage.getDriver(), resolutionEnum);
