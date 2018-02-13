@@ -1,20 +1,20 @@
 package com.capgemini.ntc.core;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.capgemini.ntc.test.core.BaseTest;
 import com.capgemini.ntc.test.core.logger.BFLogger;
 
 public class BeforeAfterTest extends BaseTest {
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		BFLogger.logInfo("[Step1] Login as Account Administrator");
 	}
 	
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		BFLogger.logInfo("[Step4] Logout");
 	}
