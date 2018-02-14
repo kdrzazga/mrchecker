@@ -34,7 +34,7 @@ public class DynamicContentTest extends BaseTest {
 	}
 	
 	@Test
-	public void shouldHasDifferentImagesAndDesxriptions() {
+	public void shouldHasDifferentImagesAndDescriptions() {
 		BFLogger.logInfo("Step3 - open 'Dynamic Content' link");
 		dynamicContentPage = theInternetPage.clickDynamicContentPage();
 		assertTrue("The Dynamic Content page is not loaded", dynamicContentPage.isLoaded());

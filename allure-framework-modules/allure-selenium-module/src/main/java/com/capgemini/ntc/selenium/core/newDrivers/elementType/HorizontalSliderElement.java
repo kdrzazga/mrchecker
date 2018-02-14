@@ -48,9 +48,9 @@ public class HorizontalSliderElement extends BasicElement {
 	}
 	
 	/**
-	 * Returns actual value of horizontal slider's position.
+	 * Returns actual value of horizontal slider`s position.
 	 * 
-	 * @return BigDecimal representing position's value.
+	 * @return BigDecimal representing position`s value.
 	 * @throws NumberFormatException
 	 */
 	public BigDecimal getCurrentSliderValue() throws NumberFormatException {
