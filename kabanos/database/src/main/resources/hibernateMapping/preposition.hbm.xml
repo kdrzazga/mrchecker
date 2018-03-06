@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.capgemini.kabanos.common.domain.Preposition"
+		table="Preposition">
+		<meta attribute="class-description">
+		</meta>
+		<id name="id" type="long" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="loggerStep" column="loggerStep" type="string"
+			not-null="true" unique="true" />
+
+		<set name="implementations" lazy="false">
+			<key column="prepositionId" not-null="false" />
+			<one-to-many class="com.capgemini.kabanos.common.domain.Implementation" />
+		</set>
+
+		<set name="predecessors" table="predecessors" lazy="false">
+			<key>
+				<column name="previd" not-null="true" />
+			</key>
+			<many-to-many entity-name="com.capgemini.kabanos.common.domain.Preposition">
+				<column name="nextid" not-null="true" />
+			</many-to-many>
+		</set>
+
+	</class>
+</hibernate-mapping>
+
+ 

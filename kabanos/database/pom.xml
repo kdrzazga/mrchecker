@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.capgemini.kabanos</groupId>
+	<artifactId>database</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+
+	<name>database</name>
+	<url>http://maven.apache.org</url>
+
+	<developers>
+		<developer>
+			<name>Marcin Sokol</name>
+			<email>marcin.sokol@capgemini.com</email>
+			<organization>Capgemini  - Nearshore Test Center - Poland</organization>
+			<organizationUrl>http://nsc.capgemini.com/nearshoretestcenter</organizationUrl>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<junit.version>4.12</junit.version>
+
+		<hibernate.version>4.1.2.Final</hibernate.version>
+
+		<h2.version>1.4.196</h2.version>
+
+		<kabanos.common.version>0.0.1</kabanos.common.version>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+
+<!-- removed for development
+		<dependency>
+			<groupId>com.capgemini.kabanos</groupId>
+			<artifactId>common</artifactId>
+			<version>${kabanos.common.version}</version>
+		</dependency>
+ -->
+ 
+	</dependencies>
+</project>

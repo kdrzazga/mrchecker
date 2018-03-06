@@ -1,0 +1,114 @@
+<!doctype html>
+<html style="width: 100%; height: 100%">
+<head>
+<title>Network | Basic usage</title>
+
+<script type="text/javascript" src="./node_modules/vis/dist/vis.js"></script>
+<link href="./node_modules/vis/dist/vis-network.min.css"
+	rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+#mynetwork {
+	width: 600px;
+	height: 400px;
+	border: 1px solid lightgray;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%">
+
+	<div style="width: 100%; height: 100%" id="mynetwork"></div>
+
+	<script type="text/javascript">
+		// create an array with nodes
+		var nodes, edges, container, data, options, network;
+
+		var xhr = new XMLHttpRequest();
+
+		xhr.open("GET", "http://localhost:8080/prepositions", true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+		xhr.setRequestHeader("Access-Control-Allow-Origin",
+				"http://localhost:8080/prepositions");
+		xhr.setRequestHeader("Accept", "application/json");
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+				
+				var response = JSON.parse(xhr.response);
+				
+				console.log(response.length);
+				
+				var nodeArray = [];
+				var edgeArray = [];
+				
+				response.forEach(el => {
+					
+					nodeArray.push({
+						id: el.id,
+						label: el.loggerStep,
+						color: {background: el.predecessors.length == 0 ? 'red' : '#00FFFF', border: 'black'}
+					});
+					
+					
+					el.predecessors.forEach(pred => {
+						edgeArray.push({
+							from : el.id,
+							to : pred,
+							arrows : 'from'
+						})
+					})
+				});
+				
+				// create an array with nodes
+				nodes = new vis.DataSet(nodeArray);
+
+				// create an array with edges
+				edges = new vis.DataSet(edgeArray);
+
+				// create a network
+				container = document.getElementById('mynetwork');
+				data = {
+					nodes : nodes,
+					edges : edges
+				};
+				options = {
+						layout: {
+							randomSeed: 13
+						},
+						nodes: {
+							size: 20,
+							font: {
+								size: 20
+							}
+						},
+						"edges": {
+						    "smooth": {
+						      "type": "cubicBezier",
+						      "roundness": 0.45
+						    }
+						  },
+						  "physics": {
+							    "barnesHut": {
+							      "gravitationalConstant": -34860,
+							      "centralGravity": 0.5,
+							      "springLength": 40,
+							      "springConstant": 0.57,
+							      "avoidOverlap": 0.98
+							    },
+							    "maxVelocity": 0,
+							    "minVelocity": 0,
+							    "timestep": 0.00
+							  }
+				};
+				network = new vis.Network(container, data, options);
+			}
+		};
+
+		xhr.send();
+	</script>
+
+
+</body>
+</html>

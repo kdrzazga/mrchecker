@@ -1,0 +1,29 @@
+Kabanos test generator + wodotryski
+
+
+
+wiekszosc modulow kozysta z common i database
+
+moduly/dependency wykomentowanno z POMA w celu przyspieszenia developmentu
+poprawic w przyszlosci, a teraz dodac w build pathu :P
+
+
+modull:
+_konwledge_tests- przykladowe testy
+
+common- wspolne obiekty itp.
+
+database - baza danych SQL zapisujace dany do pliku- ulepszyc w przyszlosci!!!
+
+dynamicCucumber- POC
+
+gatherer- zbieracz wiedzy dla kabanosa
+
+generator- kabanos
+
+graphotron- POC
+
+kabanosDatabase_inFile- baza danych generowana przez gatherera. kozystaja z nij rowniez inne moduly
+
+testSource- api pobierajace informacje o testach np. z JIRA
+
