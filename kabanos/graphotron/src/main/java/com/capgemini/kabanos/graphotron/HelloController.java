@@ -32,7 +32,7 @@ public class HelloController {
         	result.setPredecessors(this.getIdList(el));
         	result.setImplementations(el.getImplementations().size());
         	
-        	return result;
+        	return result; 
         }).collect(Collectors.toList());
     }
 
