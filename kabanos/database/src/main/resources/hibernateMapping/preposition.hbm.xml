@@ -14,6 +14,10 @@
 		<property name="loggerStep" column="loggerStep" type="string"
 			not-null="true" unique="true" />
 
+		<property name="totalNumber" column="totalNumber" type="long"
+			not-null="true"/>
+
+
 		<set name="implementations" lazy="false">
 			<key column="prepositionId" not-null="false" />
 			<one-to-many class="com.capgemini.kabanos.common.domain.Implementation" />

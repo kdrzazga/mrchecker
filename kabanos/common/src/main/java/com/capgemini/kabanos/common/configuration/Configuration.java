@@ -20,7 +20,8 @@ public enum Configuration {
 	private void setFilesConfiguration() {
 		this.filesConfiguration = new FilesConfiguration();
 		this.filesConfiguration.setKnowledgePath("C:\\Users\\masokol\\workspace\\devonfw-testing\\allure-app-under-test\\src\\test\\java\\com\\capgemini\\ntc\\selenium\\features\\webElements\\mockTest.java");
-		this.filesConfiguration.setTemplatePath("");
+		this.filesConfiguration.setTemplatePath("../../../../templates");
+		this.filesConfiguration.setTemplateName("template.ftl");
 		
 		this.filesConfiguration.setLoggerPrefix("Logger.log(\"");
 		this.filesConfiguration.setLoggerSuffix("\");");

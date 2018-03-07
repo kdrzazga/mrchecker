@@ -9,11 +9,16 @@ import java.util.List;
 
 public class FileUtils {
 
-	public static String[] readFile(String path) throws IOException {
-		return Files.readAllLines(Paths.get(path)).toArray(new String[0]);
+	public static String[] readFile(String path) {
+		try {
+			return Files.readAllLines(Paths.get(path)).toArray(new String[0]);
+		} catch (IOException e) {
+			System.out.println("Unable to read file: " + path);
+			System.out.println(e);
+			return new String[0];
+		}
 	}
 
-	
 	public static List<String> listFiles(String path) {
 		List<String> result = new ArrayList<String>();
 		

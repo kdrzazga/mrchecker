@@ -12,8 +12,6 @@ public class MockJiraTestGenerator {
 		Test result = new Test();
 		
 		result.setName("MOCK TEST 1");
-
-
 		
 		result.addStep(new Step("Go to www.facebook.com"));
 		result.addStep(new Step("Login as JohnDoe"));

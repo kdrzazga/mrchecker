@@ -18,14 +18,14 @@ import com.capgemini.kabanos.common.utility.StringUtils;
  * 
  * problemy:
  *   znaki { i } moga byc zaszyte w stringach lub w komentarzach
+ *   pomysl na rozwiazanie- przed sprawdzeniem czy } lub { znajduje sie w lini nalezy usunac
+ *   wszystkie stringi z linii
  */
 
 public class JavaExtractor implements IExtractor {
 
-	private LanguageType JAVA = LanguageType.JAVA;
-	
 	@Override
-	public TestFile extractFunctionsFromTestFile(String path) throws IOException { //czy ma byc throws???
+	public TestFile extractFunctionsFromTestFile(String path) {
 				
 		String[] lines = FileUtils.readFile(path);
 		
@@ -50,7 +50,7 @@ public class JavaExtractor implements IExtractor {
 				test.addLine(line);
 			}
 			
-			if(StringUtils.isStartsWithOneOf(line, this.JAVA.getTestPrefixes())) {
+			if(StringUtils.isStartsWithOneOf(line, LanguageType.JAVA.getTestPrefixes())) {
 				isParsingTest = true;
 				test = new Test();
 			}

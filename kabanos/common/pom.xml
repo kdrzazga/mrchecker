@@ -10,7 +10,6 @@
 	<name>common</name>
 	<url>https://github.com/devonfw/devonfw-testing</url>
 
-
     <developers>
         <developer>
             <name>Marcin Sokol</name>
@@ -28,11 +27,9 @@
     </licenses>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
 		<junit.version>4.12</junit.version>
 	</properties>
 
@@ -43,6 +40,5 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>

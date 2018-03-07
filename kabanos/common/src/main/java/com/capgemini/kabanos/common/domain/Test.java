@@ -6,7 +6,7 @@ import java.util.List;
 public class Test {
 	
 	private String name;
-	//steps form the test source eg, JIRA, QC
+	//steps from the test source eg, JIRA, QC
 	private List<Step> steps = new ArrayList<Step>();
 	
 	//all test implementation lines- this is used when test files are parsed

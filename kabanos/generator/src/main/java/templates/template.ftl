@@ -23,6 +23,7 @@ public class SomeClassName {
 		//____________________________
 		</#list>
 	    
-	    </#list>
-    }
+	    
+		</#list>
+	}
 }

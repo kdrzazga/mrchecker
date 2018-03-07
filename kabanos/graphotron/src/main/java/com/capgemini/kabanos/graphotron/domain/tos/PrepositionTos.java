@@ -4,6 +4,7 @@ public class PrepositionTos {
 	
 	private long id;
 	private int implementations;
+	private long totalNumber;
 	private Long[] predecessors;
 	private String loggerStep;
 	
@@ -30,5 +31,11 @@ public class PrepositionTos {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public long getTotalNumber() {
+		return totalNumber;
+	}
+	public void setTotalNumber(long totalNumber) {
+		this.totalNumber = totalNumber;
 	}
 }

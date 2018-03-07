@@ -1,14 +1,9 @@
 package com.capgemini.kabanos.common.domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Implementation implements Serializable{
+public class Implementation {
 
 	private long id;
 	private String lines;
-	private String[] separatedLines = {};
 	private int occurrences;
 	
 	public Implementation() {
@@ -86,10 +81,6 @@ public class Implementation implements Serializable{
 	}
 
 	public String[] getSeparatedLines() {
-		return this.separatedLines = lines.split("\n");
-	}
-
-	public void setSeparatedLines(String[] separatedLines) {
-		this.separatedLines = separatedLines;
+		return lines.split("\n");
 	}
 }

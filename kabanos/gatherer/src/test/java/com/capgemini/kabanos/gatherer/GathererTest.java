@@ -23,8 +23,8 @@ public class GathererTest {
 		String suffix = "\");";
 		String stepRegex = "";
 		
-		String expecterResult = "checkifelementisdisplayedsecondline_____secondlinesecondpartthirdline";
-		
+		String expecterResult = "checkifelementisdisplayedsecondline____secondlinesecondpartthirdline";
+				
 		assertEquals("Wrong extracted step description", 
 				this.gatherer.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
 				expecterResult);

@@ -24,14 +24,12 @@ import com.capgemini.kabanos.gatherer.extractor.JavaExtractor;
 
 public class Gatherer {
 
-	public Gatherer() {}
-	
 	//parallel processing not always gives benefit. if the array is to small then parallel is not needed
 	private final int PARALLEL_ARRAY_SIZE_THRESHOLD = 10;
-		
-		
+	private IExtractor extractor = null;
+	
 	public List<List<Preposition>> gatherKnowledge(String path, LanguageType languageType) throws Exception {
-		IExtractor extractor = null;
+		
 		switch (languageType) {
 			case JAVA:
 				extractor = new JavaExtractor();
@@ -39,14 +37,10 @@ public class Gatherer {
 			default:
 				throw new Exception("Unsuported language type: " + languageType);
 		}
-				
-		List<String> files = FileUtils.listFiles(path);
 
-		List<TestFile> testFiles = new ArrayList<TestFile>();
-		
-		for(String filePath : files) {
-			testFiles.add(extractor.extractFunctionsFromTestFile(filePath));
-		}
+		List<TestFile> testFiles = FileUtils.listFiles(path).stream()
+				.map(filePath -> extractor.extractFunctionsFromTestFile(filePath))
+				.collect(Collectors.toList());
 		
 		return createImplementationPrepositionList(testFiles);
 	}
@@ -78,9 +72,8 @@ public class Gatherer {
 		Map<String, Preposition> prepositionMap = new HashMap<>();
 		
 		String loggerLine = "";
-		boolean loggerStart = false,
-				loggerEnd = false,
-				gotWholeLogger = false;
+		boolean foundLoggerStart = false,
+				foundLoggerEnd = false;
 
 		Preposition preposition = null;
 		Preposition predecessor = null;
@@ -94,31 +87,29 @@ public class Gatherer {
 		for(String line : t.getLines()) {
 			line = line.trim();
 
-			if(gotWholeLogger && !line.startsWith(loggerPrefix))
+			if(foundLoggerEnd && !line.startsWith(loggerPrefix))
 				if(line.length() > 0) {
 					implementation.addLine(line);
 				}
 
 			//multiline logger (more that 2 lines)
-			if(loggerStart && !loggerEnd && !line.endsWith(loggerSuffix)) {
+			if(foundLoggerStart && !foundLoggerEnd && !line.endsWith(loggerSuffix)) {
 				loggerLine += line;
 			}
 			
 			//single line logger
 			else if(line.startsWith(loggerPrefix)) {
-				loggerStart = true;
+				foundLoggerStart = true;
 				loggerLine = line;
-				gotWholeLogger = false;
-				loggerEnd = line.endsWith(loggerSuffix);
-				gotWholeLogger = loggerEnd;
-				
+				foundLoggerEnd = line.endsWith(loggerSuffix);
+
 				if(preposition != null) {
 					if(implementation != null)
 						preposition.addImplementation(implementation);
 					result.add(preposition);
 				}
 				
-				if(gotWholeLogger) {
+				if(foundLoggerEnd) {
 					predecessor = preposition;
 
 					String key = this.extractLoggerText(loggerLine, loggerPrefix, loggerSuffix, loggerStepRegex);
@@ -129,9 +120,9 @@ public class Gatherer {
 				}
 			}
 			
-			else if(loggerStart && !loggerEnd && line.endsWith(loggerSuffix)) {
+			else if(foundLoggerStart && !foundLoggerEnd && line.endsWith(loggerSuffix)) {
 				loggerLine += line;
-				loggerEnd = gotWholeLogger = true;
+				foundLoggerEnd = true;
 
 				if(preposition != null)
 					result.add(preposition);

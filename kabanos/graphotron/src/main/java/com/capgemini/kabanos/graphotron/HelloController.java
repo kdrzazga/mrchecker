@@ -18,20 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloController {
 
 	
-	
-//	http://CE12031.corp.capgemini.com:8080/prepositions
-	//@CrossOrigin(origins = "http://CE12031.corp.capgemini.com:8080")
 	@CrossOrigin
     @RequestMapping("/prepositions")
     public List<PrepositionTos> someName() {
     	
     	List<Preposition> prepositions = new DataBase().getAllPrepositions();
-    	
-    
+
         return prepositions.stream().map((Preposition el) -> {
-        	
         	PrepositionTos result = new PrepositionTos();
         	result.setId(el.getId());
+        	result.setTotalNumber(el.getTotalNumber());
         	result.setLoggerStep(el.getLoggerStep());
         	result.setPredecessors(this.getIdList(el));
         	result.setImplementations(el.getImplementations().size());
@@ -40,8 +36,7 @@ public class HelloController {
         }).collect(Collectors.toList());
     }
 
-    private Long[] getIdList(Preposition prep) {
-    	
+    private Long[] getIdList(Preposition prep) {    	
     	return prep.getPredecessors().stream().map((Preposition pred) -> {
     		return pred.getId();
     	}).collect(Collectors.toList()).toArray(new Long[] {});

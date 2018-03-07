@@ -6,16 +6,17 @@ import java.util.Set;
 
 public class Preposition {
 
+	private long id;
+	private Set<Preposition> predecessors = new HashSet<Preposition>();
+	private String loggerStep;
+	private long totalNumber = 1;
+	private Set<Implementation> implementations = new HashSet<Implementation>();
+	
 	public Preposition() {}
 	
 	public Preposition(String loggerStep) {
 		this.loggerStep = loggerStep;
 	}
-	
-	private long id;
-	private Set<Preposition> predecessors = new HashSet<Preposition>();
-	private String loggerStep;
-	private Set<Implementation> implementations = new HashSet<Implementation>();
 	
 	public void addImplementation(Implementation impl) {
 		for(Implementation iter : this.implementations) {
@@ -84,7 +85,8 @@ public class Preposition {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\nKEY:\n\t" + this.loggerStep + "\n");
+		sb.append("\nKEY:\n\t" + this.loggerStep);
+		sb.append("\nfound times:\n\t" + this.totalNumber + "\n");
 		sb.append("IMPLEMENTATION:\n");
 		
 		for(Implementation implementation : this.implementations) {
@@ -121,5 +123,18 @@ public class Preposition {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public void addTotalNumber(long totalNumber) {
+		System.out.println("ADDDDD");
+		this.totalNumber += totalNumber;
+	}
+	
+	public long getTotalNumber() {
+		return totalNumber;
+	}
+
+	public void setTotalNumber(long totalNumber) {
+		this.totalNumber = totalNumber;
 	}
 }

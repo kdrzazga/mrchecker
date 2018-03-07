@@ -3,6 +3,7 @@ package com.capgemini.kabanos.common.configuration;
 public class FilesConfiguration {
 	private String knowledgePath;
 	private String templatePath;
+	private String templateName;
 	private String loggerPrefix;
 	private String loggerSuffix;
 	private String loggerStepRegex;	
@@ -46,5 +47,13 @@ public class FilesConfiguration {
 
 	public void setKnowledgePath(String knowledgePath) {
 		this.knowledgePath = knowledgePath;
+	}
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
 	}
 }

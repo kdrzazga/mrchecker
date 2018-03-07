@@ -33,52 +33,55 @@ public class Generator {
 		this.database = new DataBase();
 	}
 
-	public String generateTemplate(String testId, SourceType sourceType) throws IOException, TemplateException {
-		
-		Test test = this.getTestFromSource(testId, sourceType);
-
-		this.generatePrepositions(test);
-
-		
+	
+	private Template initTemplate() throws IOException {
 		freemarker.template.Configuration cfg = new freemarker.template.Configuration();
-		cfg.setClassForTemplateLoading(Generator.class, "../../../../templates");
-
+		cfg.setClassForTemplateLoading(Generator.class, Configuration.INSTANCE.getFilesConfiguration().getTemplatePath());
 		cfg.setIncompatibleImprovements(new Version(2, 3, 20));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setLocale(Locale.US);
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
+		return cfg.getTemplate(Configuration.INSTANCE.getFilesConfiguration().getTemplateName());
+	}
+	
+	private Map<String, Object> initTempleteInput(Test test) {
 		Map<String, Object> input = new HashMap<String, Object>();
 
 		input.put("testName", test.getName());
 		input.put("testSteps", test.getSteps());
-
 		
-		Template template = cfg.getTemplate("template.ftl");
+		return input;
+	}
+	
+	public String generateTemplate(String testId, SourceType sourceType) throws IOException, TemplateException {
+		Test test = this.getTestFromSource(testId, sourceType);
+		this.addPrepositions(test);
+
+		Template template = this.initTemplate();
+		
+		Map<String, Object> input = this.initTempleteInput(test);
 
 		StringWriter stringWriter = new StringWriter();
 		template.process(input, stringWriter);
 
-		System.out.println(stringWriter);
-
-		return null;
+		return stringWriter.toString();
 	}
 
 	private Test getTestFromSource(String testId, SourceType sourceType) {
 
-		@SuppressWarnings("rawtypes")
-		IConnector connector = null;
 
-		switch (sourceType) {
-		case JIRA:
-			connector = new JiraConnector(Configuration.INSTANCE.getJiraConfiguration().getJiraUrl());
-			break;
-		case QC:
-			break;
-		default:
-			break;
-
-		}
+//		IConnector connector = null;
+//
+//		switch (sourceType) {
+//		case JIRA:
+//			connector = new JiraConnector(Configuration.INSTANCE.getJiraConfiguration().getJiraUrl());
+//			break;
+//		case QC:
+//			break;
+//		default:
+//			break;
+//
+//		}
 
 		// return connector.getTestData(testId);
 
@@ -87,7 +90,7 @@ public class Generator {
 		return MockJiraTestGenerator.generateTest();
 	}
 
-	private void generatePrepositions(Test test) {
+	private void addPrepositions(Test test) {
 		for (Step step : test.getSteps()) {
 
 			Preposition prep = database.getPreposition(StringUtils.formatLoggerStep(step.getDescription()));
@@ -96,9 +99,7 @@ public class Generator {
 
 			if (prep != null) {
 				impls.addAll(prep.getImplementations());
-				impls.sort((l, r) -> {
-					return r.getOccurrences() - l.getOccurrences();
-				});
+				impls.sort((l, r) -> r.getOccurrences() - l.getOccurrences());
 			}
 			
 			step.setImplementations(impls);

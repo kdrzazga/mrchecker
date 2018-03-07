@@ -32,23 +32,22 @@ public class DataBase {
 		 * if it point to a wrong object the a "transient" error is thrown
 		 */
 		Map<String, Preposition> prepositionMap = new HashMap<>();
-		
+
 		try {
 			session = HibernateUtils.getSessionFactory().openSession();
 			tran = session.beginTransaction();
 
 			for(Preposition prep : prepositions) {
 				Preposition fromDB = this.getPreposition(prep.getLoggerStep(), session);
-				
+
 				prepositionMap.put(prep.getLoggerStep(), fromDB != null ? fromDB : prep);
 
-				
 				Set<Preposition> newPredecesors = new HashSet<>();				
-				for(Preposition p : prep.getPredecessors()) {
-					newPredecesors.add(prepositionMap.getOrDefault(p.getLoggerStep(), p));
+				for(Preposition pred : prep.getPredecessors()) {
+					newPredecesors.add(prepositionMap.getOrDefault(pred.getLoggerStep(), pred));
 				}
 				prep.setPredecessors(newPredecesors);
-				
+
 				if(fromDB == null) {
 					session.save(prep);
 					for (Implementation impl : prep.getImplementations()) {
@@ -56,6 +55,7 @@ public class DataBase {
 					}
 				}
 				else {
+					fromDB.addTotalNumber(prep.getTotalNumber());
 					fromDB.addImplementations(prep.getImplementations());
 					fromDB.addPredecessors(prep.getPredecessors());
 					session.update(fromDB);
