@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-public class HelloController {
+public class GraphController {
 
 	
 	@CrossOrigin
@@ -40,7 +40,5 @@ public class HelloController {
     	return prep.getPredecessors().stream().map((Preposition pred) -> {
     		return pred.getId();
     	}).collect(Collectors.toList()).toArray(new Long[] {});
-    	
     }
-    
 }

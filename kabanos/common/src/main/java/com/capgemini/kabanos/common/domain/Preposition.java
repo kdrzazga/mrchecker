@@ -9,13 +9,15 @@ public class Preposition {
 	private long id;
 	private Set<Preposition> predecessors = new HashSet<Preposition>();
 	private String loggerStep;
+	private String formattedLoggerStep;
 	private long totalNumber = 1;
 	private Set<Implementation> implementations = new HashSet<Implementation>();
 	
 	public Preposition() {}
 	
-	public Preposition(String loggerStep) {
+	public Preposition(String loggerStep, String formattedLoggerStep) {
 		this.loggerStep = loggerStep;
+		this.formattedLoggerStep = formattedLoggerStep;
 	}
 	
 	public void addImplementation(Implementation impl) {
@@ -43,7 +45,6 @@ public class Preposition {
 	public void addPredecessors(Collection<Preposition> preds) {
 		this.predecessors.addAll(preds);
 	}		
-		
 	public String getLoggerStep() {
 		return loggerStep;
 	}
@@ -74,10 +75,10 @@ public class Preposition {
 		if (getClass() != obj.getClass())
 			return false;
 		Preposition other = (Preposition) obj;
-		if (loggerStep == null) {
-			if (other.loggerStep != null)
+		if (formattedLoggerStep == null) {
+			if (other.formattedLoggerStep != null)
 				return false;
-		} else if (!loggerStep.equals(other.loggerStep))
+		} else if (!formattedLoggerStep.equals(other.formattedLoggerStep))
 			return false;
 		return true;
 	}
@@ -86,6 +87,7 @@ public class Preposition {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nKEY:\n\t" + this.loggerStep);
+		sb.append("\nFORMATTED KEY:\n\t" + this.formattedLoggerStep);
 		sb.append("\nfound times:\n\t" + this.totalNumber + "\n");
 		sb.append("IMPLEMENTATION:\n");
 		
@@ -126,7 +128,6 @@ public class Preposition {
 	}
 
 	public void addTotalNumber(long totalNumber) {
-		System.out.println("ADDDDD");
 		this.totalNumber += totalNumber;
 	}
 	
@@ -136,5 +137,13 @@ public class Preposition {
 
 	public void setTotalNumber(long totalNumber) {
 		this.totalNumber = totalNumber;
+	}
+
+	public String getFormattedLoggerStep() {
+		return formattedLoggerStep;
+	}
+
+	public void setFormattedLoggerStep(String formattedLoggerStep) {
+		this.formattedLoggerStep = formattedLoggerStep;
 	}
 }

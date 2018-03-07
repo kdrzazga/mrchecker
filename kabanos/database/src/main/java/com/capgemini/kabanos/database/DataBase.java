@@ -38,13 +38,13 @@ public class DataBase {
 			tran = session.beginTransaction();
 
 			for(Preposition prep : prepositions) {
-				Preposition fromDB = this.getPreposition(prep.getLoggerStep(), session);
+				Preposition fromDB = this.getPreposition(prep.getFormattedLoggerStep(), session);
 
-				prepositionMap.put(prep.getLoggerStep(), fromDB != null ? fromDB : prep);
+				prepositionMap.put(prep.getFormattedLoggerStep(), fromDB != null ? fromDB : prep);
 
 				Set<Preposition> newPredecesors = new HashSet<>();				
 				for(Preposition pred : prep.getPredecessors()) {
-					newPredecesors.add(prepositionMap.getOrDefault(pred.getLoggerStep(), pred));
+					newPredecesors.add(prepositionMap.getOrDefault(pred.getFormattedLoggerStep(), pred));
 				}
 				prep.setPredecessors(newPredecesors);
 
@@ -95,13 +95,13 @@ public class DataBase {
 
 	private Preposition getPreposition(String loggerStep, Session session) {
 		Criteria criteria = session.createCriteria(Preposition.class);
-		criteria.add(Restrictions.eq("loggerStep", loggerStep));
+		criteria.add(Restrictions.eq("formattedLoggerStep", loggerStep));
 		return (Preposition) criteria.uniqueResult();
 	}
 	
-	public Preposition getPreposition(String loggerStep) {
+	public Preposition getPreposition(String formattedLoggerStep) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Preposition result = this.getPreposition(loggerStep, session);		
+		Preposition result = this.getPreposition(formattedLoggerStep, session);		
 		session.close();
 		return result;
 	}

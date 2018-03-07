@@ -4,7 +4,7 @@ import com.capgemini.kabanos.dynamicPseudoCucumber.annotations.Step;
 
 public class DifferentPage {
 
-	@Step("gobacktomainfacebookpage")
+	@Step("Go back to main facebook page")
 	public void forstStep() {
 		System.out.println("ececuting logout from go back to main facebook page step");
 		System.out.println("....");
@@ -12,14 +12,14 @@ public class DifferentPage {
 	
 	//TODO test this
 	//this should fail the build
-//	@Step("openmessages")
+//	@Step("Open messages")
 //	public void differentStep() {
 //		System.out.println("duplicate");
 //		System.out.println("....");
 //	}
 	
 	
-	@Step("loginasjohndoe")
+	@Step("Login as JohnDoe")
 	public void differentSte22p() {
 		System.out.println("ececuting open login as john doe step");
 		System.out.println("....");

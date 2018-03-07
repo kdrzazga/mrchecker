@@ -12,8 +12,11 @@
 			<generator class="identity" />
 		</id>
 		<property name="loggerStep" column="loggerStep" type="string"
-			not-null="true" unique="true" />
-
+			not-null="true" unique="true"/>
+			
+		<property name="formattedLoggerStep" column="formattedLoggerStep" type="string"
+			not-null="true" unique="true"/>
+		
 		<property name="totalNumber" column="totalNumber" type="long"
 			not-null="true"/>
 

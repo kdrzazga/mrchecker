@@ -6,12 +6,14 @@ public enum LanguageType {
 			"@Test",
 			"@BeforeClass", "@Before", "@BeforeEach", "@BeforeAll",
 			"@AfterClass", "@After",  "@AfterEach", "@AfterAll"
-	), 
-	JAVA_SCRIPT(
-			".js", 
-			"it(\""
-	), 
-	CUCUMBER(".feature", "");
+	)
+//	, //not implemented yet
+//	JAVA_SCRIPT(
+//			".js", 
+//			"it(\""
+//	), 
+//	CUCUMBER(".feature", "")
+	;
 	
 	private String fileType;
 	private String[] testPrefixes;
