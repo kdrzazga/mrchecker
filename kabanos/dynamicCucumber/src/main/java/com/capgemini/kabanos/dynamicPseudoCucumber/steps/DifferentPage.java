@@ -12,15 +12,21 @@ public class DifferentPage {
 	
 	//TODO test this
 	//this should fail the build
-//	@Step("Open messages")
-//	public void differentStep() {
-//		System.out.println("duplicate");
-//		System.out.println("....");
-//	}
+	@Step("Open messages")
+	public void differentStep() {
+		System.out.println("duplicate");
+		System.out.println("....");
+	}
 	
 	
 	@Step("Login as JohnDoe")
 	public void differentSte22p() {
+		System.out.println("ececuting open login as john doe step");
+		System.out.println("....");
+	}
+	
+	@Step("Login as JohnDoe")
+	public void differentSte22dp() {
 		System.out.println("ececuting open login as john doe step");
 		System.out.println("....");
 	}
