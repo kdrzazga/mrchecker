@@ -19,13 +19,19 @@ import com.capgemini.kabanos.dynamicPseudoCucumber.domain.StepExecutionResult;
 import com.capgemini.kabanos.dynamicPseudoCucumber.enums.StepState;
 import com.capgemini.kabanos.dynamicPseudoCucumber.exceptions.DuplicateMethodException;
 
+//TODP regexy i datadriven
+
+
 public class TestExecutor {
 
 	private static Reflections reflections = new Reflections(
 			new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage("")).setScanners(new SubTypesScanner(false),
 					new TypeAnnotationsScanner(), new MethodAnnotationsScanner()));
 
-	public Map<String, StepExecutionResult> generateReport(List<String> stepList) {
+	private Map<String, Object> stepClassMap = new HashMap<>();
+	
+	
+	public Map<String, StepExecutionResult> generateExecuteionReport(List<String> stepList) {
 		Map<String, Method> methodMap = this.mapMethodsByStep(this.getTestSteps());
 
 		Map<String, StepExecutionResult> executionReport = new HashMap<>();
@@ -85,10 +91,6 @@ public class TestExecutor {
 		return result;
 	}
 
-	// private StepState invokeMethod(Method m) {
-	//
-	// }
-
 	private StepExecutionResult generateStepReport(StepState previousState, Method m) {
 
 		StepState currentState;
@@ -97,7 +99,12 @@ public class TestExecutor {
 		try {
 			// TODO ogarnac uruchamianie z parametrami
 			// tj. testy datadriven
-			m.invoke(m.getDeclaringClass().newInstance());
+			
+			if(!this.stepClassMap.containsKey(m.getDeclaringClass().toString())) {
+				this.stepClassMap.put(m.getDeclaringClass().toString(), m.getDeclaringClass().newInstance());
+			}
+			
+			m.invoke(this.stepClassMap.get(m.getDeclaringClass().toString()));//m.getDeclaringClass().newInstance());
 
 			currentState = StepState.SUCCESS;
 		} catch (Exception e) {
@@ -136,11 +143,11 @@ public class TestExecutor {
 				return new StepExecutionResult(StepState.FAILURE_AFTER_FAILURE, message);
 
 			case NULL_OBJECT:
-				return new StepExecutionResult(StepState.FAILURE, "Failed as first step\n" + message);
+				return new StepExecutionResult(StepState.FAILURE, "Failed as first step: " + message);
 
 			case SUCCESS_AFTER_FAILURE:
 				return new StepExecutionResult(StepState.FAILURE_AFTER_FAILURE,
-						"Step failded, and one of previous steps did fail also\n" + message);
+						"Step failded, and one of previous steps did also fail\n" + message);
 
 			default:
 				break;
@@ -181,7 +188,6 @@ public class TestExecutor {
 		sb.append("Unable to execute tests because of duplicate Step names").append("\n");
 
 		for (List<Method> duplicateMethods : duplicates) {
-
 			sb.append("\nDuplicate Step key: " + duplicateMethods.get(0).getAnnotation(Step.class).value())
 					.append("\n");
 
