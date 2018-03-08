@@ -12,8 +12,8 @@ import com.capgemini.kabanos.dynamicPseudoCucumber.domain.StepExecutionResult;
 public class App {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
-
-		String[] d = {"Login as JohnDoe", "Login as JaneDoe"};
+		
+		String[] d = {"Login as JohnDoe and type 123.45", "Login as JaneDoe and type 122.44"};
 		
 //		String[] d = { "Go to www.facebook.com", "Login as JohnDoe", "Open messages and count not readed",
 //				"Click on first not readed message and count not readed messages", "Go back to main facebook page",

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
@@ -16,10 +17,9 @@ import com.capgemini.kabanos.dynamicPseudoCucumber.annotations.Step;
 import com.capgemini.kabanos.dynamicPseudoCucumber.domain.MethodInvokeResult;
 import com.capgemini.kabanos.dynamicPseudoCucumber.domain.StepExecutionResult;
 import com.capgemini.kabanos.dynamicPseudoCucumber.enums.StepState;
-import com.capgemini.kabanos.dynamicPseudoCucumber.utils.StepValidator;
+import com.capgemini.kabanos.dynamicPseudoCucumber.utils.StepUtils;
 
 //TODP regexy i datadriven
-
 
 public class TestExecutor {
 
@@ -28,9 +28,7 @@ public class TestExecutor {
 					new TypeAnnotationsScanner(), new MethodAnnotationsScanner()));
 
 	private Map<String, Object> stepClassMap = new HashMap<>();
-	
-	
-	
+
 	public Map<String, StepExecutionResult> generateExecuteionReport(List<String> stepList) {
 		Map<String, Method> methodMap = this.mapMethodsByStep(stepList);
 
@@ -72,53 +70,58 @@ public class TestExecutor {
 		return executionReport;
 	}
 
-	
-	
-
 	/*
-	 * function returns all methods that have the @Step annotation
-	 * mapped by step name for faster execution
+	 * function returns all methods that have the @Step annotation mapped by step
+	 * name for faster execution
 	 */
 	private Map<String, Method> mapMethodsByStep(List<String> stepList) {
 		Set<Method> methods = reflections.getMethodsAnnotatedWith(Step.class);
-		
-		StepValidator.validateUniquenessOfMethods(methods, stepList);
-		
+
+		StepUtils.validateUniquenessOfMethods(methods, stepList);
+
 		Map<String, Method> result = new HashMap<>();
-		for (Method m : methods)
-			result.put(m.getAnnotation(Step.class).value().trim(), m);
+
+		stepList.forEach(step -> {
+			List<Method> matchingMethods = methods.stream()
+					.filter(method -> step.matches(StepUtils.getStepValue(method)))
+					.collect(Collectors.toList());
+			
+			if (matchingMethods.size() == 1)
+				result.put(step, matchingMethods.get(0));
+		});
 
 		return result;
 	}
 
-	
-	private MethodInvokeResult invokeMethod(Method m) {
+	private MethodInvokeResult invokeMethod(String step, Method m) {
 		StepState currentState;
 		String message = "";
 
 		try {
 			// TODO ogarnac uruchamianie z parametrami
 			// tj. testy datadriven
-			
-			if(!this.stepClassMap.containsKey(m.getDeclaringClass().toString())) {
+
+			if (!this.stepClassMap.containsKey(m.getDeclaringClass().toString())) {
 				this.stepClassMap.put(m.getDeclaringClass().toString(), m.getDeclaringClass().newInstance());
 			}
 			
-			m.invoke(this.stepClassMap.get(m.getDeclaringClass().toString()));
-
+			Object[] params = StepUtils.extractParamsFromStep(step, StepUtils.getStepValue(m));
+			
+			m.invoke(this.stepClassMap.get(m.getDeclaringClass().toString()), params);
+			
 			currentState = StepState.SUCCESS;
 		} catch (Exception e) {
-			message = e.getMessage();
+			message = e.toString();
 			currentState = StepState.FAILURE;
 		}
-		
+
 		return new MethodInvokeResult(currentState, message);
 	}
-	
+
 	private StepExecutionResult generateStepReport(String step, StepState previousState, Method m) {
 
-		MethodInvokeResult invokeResult = this.invokeMethod(m);
-		
+		MethodInvokeResult invokeResult = this.invokeMethod(step, m);
+
 		if (invokeResult.getState() == StepState.SUCCESS) {
 			switch (previousState) {
 			case SUCCESS:
