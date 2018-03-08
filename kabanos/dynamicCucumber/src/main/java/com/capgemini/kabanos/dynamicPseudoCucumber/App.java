@@ -13,11 +13,13 @@ public class App {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
 
-		String[] d = { "Go to www.facebook.com", "Login as JohnDoe", "Open messages and count not readed",
-				"Click on first not readed message and count not readed messages", "Go back to main facebook page",
-				"Log out from facebook", "Open messages", "Create a new message to JaneDoe",
-				"write a very long text message a send it to the recipient", "Count total message count",
-				"Delete first messagem and count total messages" };
+		String[] d = {"Login as JohnDoe", "Login as JaneDoe"};
+		
+//		String[] d = { "Go to www.facebook.com", "Login as JohnDoe", "Open messages and count not readed",
+//				"Click on first not readed message and count not readed messages", "Go back to main facebook page",
+//				"Log out from facebook", "Open messages", "Create a new message to JaneDoe",
+//				"write a very long text message a send it to the recipient", "Count total message count",
+//				"Delete first messagem and count total messages" };
 
 		Map<String, StepExecutionResult> report = new TestExecutor().generateExecuteionReport(Arrays.asList(d));
 

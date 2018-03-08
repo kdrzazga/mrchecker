@@ -1,12 +1,10 @@
 package com.capgemini.kabanos.dynamicPseudoCucumber;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
@@ -15,9 +13,10 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import com.capgemini.kabanos.dynamicPseudoCucumber.annotations.Step;
+import com.capgemini.kabanos.dynamicPseudoCucumber.domain.MethodInvokeResult;
 import com.capgemini.kabanos.dynamicPseudoCucumber.domain.StepExecutionResult;
 import com.capgemini.kabanos.dynamicPseudoCucumber.enums.StepState;
-import com.capgemini.kabanos.dynamicPseudoCucumber.exceptions.DuplicateMethodException;
+import com.capgemini.kabanos.dynamicPseudoCucumber.utils.StepValidator;
 
 //TODP regexy i datadriven
 
@@ -31,8 +30,9 @@ public class TestExecutor {
 	private Map<String, Object> stepClassMap = new HashMap<>();
 	
 	
+	
 	public Map<String, StepExecutionResult> generateExecuteionReport(List<String> stepList) {
-		Map<String, Method> methodMap = this.mapMethodsByStep(this.getTestSteps());
+		Map<String, Method> methodMap = this.mapMethodsByStep(stepList);
 
 		Map<String, StepExecutionResult> executionReport = new HashMap<>();
 
@@ -50,7 +50,7 @@ public class TestExecutor {
 						: StepState.MISSING_IMPLEMENTATION_AND_NOT_REACHABLE));
 			} else {
 				if (methodMap.containsKey(step)) {
-					stepReport = this.generateStepReport(prevState, methodMap.get(step));
+					stepReport = this.generateStepReport(step, prevState, methodMap.get(step));
 					executionReport.put(step, stepReport);
 
 					if (stepReport.getState() == StepState.FAILURE_AFTER_FAILURE
@@ -67,32 +67,32 @@ public class TestExecutor {
 					executeSteps = false;
 				}
 			}
-
 		}
 
 		return executionReport;
 	}
 
-	public Set<Method> getTestSteps() {
+	
+	
+
+	/*
+	 * function returns all methods that have the @Step annotation
+	 * mapped by step name for faster execution
+	 */
+	private Map<String, Method> mapMethodsByStep(List<String> stepList) {
 		Set<Method> methods = reflections.getMethodsAnnotatedWith(Step.class);
-
-		validateUniquenessOfMethods(methods);
-
-		return methods;
-	}
-
-	public Map<String, Method> mapMethodsByStep(Set<Method> methods) {
+		
+		StepValidator.validateUniquenessOfMethods(methods, stepList);
+		
 		Map<String, Method> result = new HashMap<>();
-
-		for (Method m : methods) {
+		for (Method m : methods)
 			result.put(m.getAnnotation(Step.class).value().trim(), m);
-		}
 
 		return result;
 	}
 
-	private StepExecutionResult generateStepReport(StepState previousState, Method m) {
-
+	
+	private MethodInvokeResult invokeMethod(Method m) {
 		StepState currentState;
 		String message = "";
 
@@ -104,20 +104,22 @@ public class TestExecutor {
 				this.stepClassMap.put(m.getDeclaringClass().toString(), m.getDeclaringClass().newInstance());
 			}
 			
-			m.invoke(this.stepClassMap.get(m.getDeclaringClass().toString()));//m.getDeclaringClass().newInstance());
+			m.invoke(this.stepClassMap.get(m.getDeclaringClass().toString()));
 
 			currentState = StepState.SUCCESS;
 		} catch (Exception e) {
-
-			// TODO
-			// dobrze by bylo gdyby message == to co na stackTrejsie
-			// e.printStackTrace();
 			message = e.getMessage();
-
 			currentState = StepState.FAILURE;
 		}
+		
+		return new MethodInvokeResult(currentState, message);
+	}
+	
+	private StepExecutionResult generateStepReport(String step, StepState previousState, Method m) {
 
-		if (currentState == StepState.SUCCESS) {
+		MethodInvokeResult invokeResult = this.invokeMethod(m);
+		
+		if (invokeResult.getState() == StepState.SUCCESS) {
 			switch (previousState) {
 			case SUCCESS:
 			case NULL_OBJECT:
@@ -134,20 +136,20 @@ public class TestExecutor {
 			default:
 				break;
 			}
-		} else if (currentState == StepState.FAILURE) {
+		} else if (invokeResult.getState() == StepState.FAILURE) {
 			switch (previousState) {
 			case SUCCESS:
-				return new StepExecutionResult(StepState.FAILURE, message);
+				return new StepExecutionResult(StepState.FAILURE, invokeResult.getMessage());
 
 			case FAILURE:
-				return new StepExecutionResult(StepState.FAILURE_AFTER_FAILURE, message);
+				return new StepExecutionResult(StepState.FAILURE_AFTER_FAILURE, invokeResult.getMessage());
 
 			case NULL_OBJECT:
-				return new StepExecutionResult(StepState.FAILURE, "Failed as first step: " + message);
+				return new StepExecutionResult(StepState.FAILURE, "Failed as first step: " + invokeResult.getMessage());
 
 			case SUCCESS_AFTER_FAILURE:
 				return new StepExecutionResult(StepState.FAILURE_AFTER_FAILURE,
-						"Step failded, and one of previous steps did also fail\n" + message);
+						"Step failded, and one of previous steps did also fail\n" + invokeResult.getMessage());
 
 			default:
 				break;
@@ -157,47 +159,5 @@ public class TestExecutor {
 		// not covered
 		// this should never be returned
 		return null;
-	}
-
-	private void validateUniquenessOfMethods(Set<Method> methods) {
-		Map<String, List<Method>> functionLocationMap = new HashMap<>();
-
-		methods.stream().forEach(el -> {
-			String annotationValue = el.getAnnotation(Step.class).value();
-			if (!functionLocationMap.containsKey(annotationValue)) {
-				functionLocationMap.put(annotationValue, new ArrayList<>());
-			}
-			functionLocationMap.get(annotationValue).add(el);
-		});
-
-		List<List<Method>> duplicates = functionLocationMap.values().stream().filter(el -> el.size() > 1)
-				.collect(Collectors.toList());
-
-		if (duplicates.size() > 0) {
-			String errorMessage = generateNotUniequeMethodsErrorMessage(duplicates);
-			throw new DuplicateMethodException(errorMessage);
-		}
-	}
-
-	private String generateNotUniequeMethodsErrorMessage(List<List<Method>> duplicates) {
-		StringBuilder sb = new StringBuilder();
-
-		String logDivider = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-
-		sb.append("\n\n" + logDivider + "\n\n");
-		sb.append("Unable to execute tests because of duplicate Step names").append("\n");
-
-		for (List<Method> duplicateMethods : duplicates) {
-			sb.append("\nDuplicate Step key: " + duplicateMethods.get(0).getAnnotation(Step.class).value())
-					.append("\n");
-
-			for (Method m : duplicateMethods) {
-				sb.append("\tClass name:       " + m.getDeclaringClass()).append("\n");
-				sb.append("\tFunction value:   " + m.getName()).append("\n\n");
-			}
-		}
-
-		sb.append(logDivider);
-		return sb.toString();
 	}
 }

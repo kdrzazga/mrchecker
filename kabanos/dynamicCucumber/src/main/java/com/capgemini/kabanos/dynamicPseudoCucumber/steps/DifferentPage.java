@@ -11,9 +11,18 @@ public class DifferentPage {
 	}
 	
 	
-	@Step("Login as JohnDoe")
-	public void differentSte22p() {
-		System.out.println("ececuting open login as john doe step");
+	@Step("Login as (.*)")
+	public void regex1() {
+		System.out.println("ececuting open login as REGEX step");
 		System.out.println("....");
 	}
+	
+	
+
+	@Step("Delete first messagem and count total messages")
+	public void lastImple() {
+		System.out.println("ececuting open login as Delete first messagem and count total messages step");
+		System.out.println("....");
+	}
+	
 }
