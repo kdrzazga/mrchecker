@@ -6,25 +6,25 @@
 	<artifactId>common</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
-	
+
 	<name>common</name>
 	<url>https://github.com/devonfw/devonfw-testing</url>
 
-    <developers>
-        <developer>
-            <name>Marcin Sokol</name>
-            <email>marcin.sokol@capgemini.com</email>
-            <organization>Capgemini  - Nearshore Test Center - Poland</organization>
-            <organizationUrl>http://nsc.capgemini.com/nearshoretestcenter</organizationUrl>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Marcin Sokol</name>
+			<email>marcin.sokol@capgemini.com</email>
+			<organization>Capgemini  - Nearshore Test Center - Poland</organization>
+			<organizationUrl>http://nsc.capgemini.com/nearshoretestcenter</organizationUrl>
+		</developer>
+	</developers>
 
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,5 +40,6 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 </project>

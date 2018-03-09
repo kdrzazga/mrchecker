@@ -3,6 +3,7 @@ package com.capgemini.kabanos.gatherer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,11 +25,17 @@ public class Gatherer {
 	private final int PARALLEL_ARRAY_SIZE_THRESHOLD = 10;
 	private IExtractor extractor = null;
 
+	private Properties properties;
+
+	public Gatherer(Properties properties) {
+		this.properties = properties;
+	}
+
 	public List<Preposition> gatherKnowledge(TestFrameworkType frameworkType, String[] paths) throws Exception {
-		
+
 		switch (frameworkType) {
 		case JUNIT:
-			extractor = new JUnitExtractor();
+			extractor = new JUnitExtractor(this.properties);
 			break;
 		case CUCUMBER:
 			extractor = new CucumberExtractor();
@@ -54,20 +61,18 @@ public class Gatherer {
 		Stream<TestFile> stream = testFiles.size() > PARALLEL_ARRAY_SIZE_THRESHOLD ? testFiles.parallelStream()
 				: testFiles.stream();
 
-		List<Preposition> result = stream.map(this::extractPrepositionsFromTestFile).reduce(ArrayUtils::megre)
-				.orElse(new ArrayList<>());
-
-		return result;
+		return stream.map(this::extractPrepositionsFromTestFile).reduce(ArrayUtils::megre).orElse(new ArrayList<>());
 	}
 
 	private List<Preposition> extractPrepositionsFromTestFile(TestFile file) {
-		return file.getTests().stream().map(extractor::gatherKnowledgeFromTest).filter(el -> el.size() > 0).reduce((l,r) -> {
-			l.addAll(r);
-			return l;
-		}).get();
+		return file.getTests().stream().map(extractor::gatherKnowledgeFromTest).filter(el -> el.size() > 0)
+				.reduce((l, r) -> {
+					l.addAll(r);
+					return l;
+				}).get();
 	}
 
 	public boolean saveKnowledge(List<Preposition> knowledge) {
-		return new DataBase().savePrepositions(knowledge);
+		return new DataBase(this.properties).savePrepositions(knowledge);
 	}
 }

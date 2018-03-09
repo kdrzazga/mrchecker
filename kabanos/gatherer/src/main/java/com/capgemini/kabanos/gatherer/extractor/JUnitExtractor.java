@@ -2,10 +2,10 @@ package com.capgemini.kabanos.gatherer.extractor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.capgemini.kabanos.common.configuration.Configuration;
 import com.capgemini.kabanos.common.domain.Implementation;
 import com.capgemini.kabanos.common.domain.Preposition;
 import com.capgemini.kabanos.common.domain.Test;
@@ -28,9 +28,15 @@ import com.capgemini.kabanos.common.utility.StringUtils;
 
 public class JUnitExtractor implements IExtractor {
 
+	private Properties properties;
+	
 	private String[] testPrefixes = { "@Test", "@BeforeClass", "@Before", "@BeforeEach", "@BeforeAll", "@AfterClass",
 			"@After", "@AfterEach", "@AfterAll" };
 
+	public JUnitExtractor(Properties properties) {
+		this.properties = properties;
+	}
+	
 	@Override
 	public TestFile extractFunctionsFromTestFile(String path) {
 
@@ -79,10 +85,9 @@ public class JUnitExtractor implements IExtractor {
 		Preposition predecessor = null;
 		Implementation implementation = new Implementation();
 
-		// TODO ladniej!!!!!!!!!!!!!!!!!
-		String loggerPrefix = Configuration.INSTANCE.getFilesConfiguration().getLoggerPrefix();
-		String loggerSuffix = Configuration.INSTANCE.getFilesConfiguration().getLoggerSuffix();
-		String loggerStepRegex = Configuration.INSTANCE.getFilesConfiguration().getLoggerStepRegex();
+		String loggerPrefix = this.properties.getProperty("loggerPrefix");
+		String loggerSuffix = this.properties.getProperty("loggerSuffix");
+		String loggerStepRegex = this.properties.getProperty("loggerStepRegex");
 
 		for (String line : t.getLines()) {
 			line = line.trim();

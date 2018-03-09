@@ -1,9 +1,16 @@
 package com.capgemini.kabanos.common.utility;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +47,17 @@ public class FileUtils {
 		}
 	    
 		return result;
+	}
+	
+	public static boolean saveFile(String path, String content) throws IOException {
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
+		    writer.write(content);
+		    return true;
+		} 
+		catch (IOException ex) {
+			System.out.println(ex);
+
+			throw ex;
+		}
 	}
 }

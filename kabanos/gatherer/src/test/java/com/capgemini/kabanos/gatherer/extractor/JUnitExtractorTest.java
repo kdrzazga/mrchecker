@@ -2,11 +2,13 @@ package com.capgemini.kabanos.gatherer.extractor;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Properties;
+
 import org.junit.Test;
 
 public class JUnitExtractorTest {
 	
-	private JUnitExtractor junitExtractor = new JUnitExtractor();
+	private JUnitExtractor junitExtractor = new JUnitExtractor(new Properties());
 	
 	@Test
     public void extractLoggerText_1() {

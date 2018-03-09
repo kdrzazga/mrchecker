@@ -12,7 +12,7 @@ public class App {
     public static void main( String[] args ) throws Exception
     {
     	
-        DataBase db = new DataBase();
+        DataBase db = new DataBase(null);
           
         List<Preposition> result = db.getPrepositions("kabanos");
         

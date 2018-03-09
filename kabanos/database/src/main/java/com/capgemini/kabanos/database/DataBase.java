@@ -2,6 +2,7 @@ package com.capgemini.kabanos.database;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -20,7 +21,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class DataBase {
-	public DataBase() {
+	
+	private Properties properties;
+	
+	public DataBase(Properties properties) {
+		this.properties = properties;
 	}
 
 	public boolean savePrepositions(List<Preposition> prepositions) {

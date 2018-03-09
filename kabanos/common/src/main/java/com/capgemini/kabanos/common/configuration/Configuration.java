@@ -6,29 +6,29 @@ public enum Configuration {
 	
 	private JiraConfiguration jiraConfiguration;
 	
-	private FilesConfiguration filesConfiguration;
+//	private FilesConfiguration filesConfiguration;
 	
 	private DbConfiguration dbConfiguration;
 
 	Configuration() {
 		this.setJiraConfiguration();
-		this.setFilesConfiguration();
+//		this.setFilesConfiguration();
 		this.setDbConfiguration();
 	}
 	
 	
-	private void setFilesConfiguration() {
-		this.filesConfiguration = new FilesConfiguration();
-		this.filesConfiguration.setKnowledgePath("C:\\Users\\masokol\\workspace\\devonfw-testing\\allure-app-under-test\\src\\test\\java\\com\\capgemini\\ntc\\selenium\\features\\webElements\\mockTest.java");
-		this.filesConfiguration.setTemplatePath("../../../../templates");
-		this.filesConfiguration.setTemplateName("template.ftl");
-		
-		this.filesConfiguration.setLoggerPrefix("Logger.log(\"");
-		this.filesConfiguration.setLoggerSuffix("\");");
-
-		this.filesConfiguration.setLoggerStepRegex("");
-		
-	}
+//	private void setFilesConfiguration() {
+//		this.filesConfiguration = new FilesConfiguration();
+//		this.filesConfiguration.setKnowledgePath("C:\\Users\\masokol\\workspace\\devonfw-testing\\allure-app-under-test\\src\\test\\java\\com\\capgemini\\ntc\\selenium\\features\\webElements\\mockTest.java");
+//		this.filesConfiguration.setTemplatePath("../../../../templates");
+//		this.filesConfiguration.setTemplateName("template.ftl");
+//		
+//		this.filesConfiguration.setLoggerPrefix("Logger.log(\"");
+//		this.filesConfiguration.setLoggerSuffix("\");");
+//
+//		this.filesConfiguration.setLoggerStepRegex("");
+//		
+//	}
 
 
 	private void setJiraConfiguration() {
@@ -59,13 +59,6 @@ public enum Configuration {
 		this.jiraConfiguration = jiraConfiguration;
 	}
 
-	public FilesConfiguration getFilesConfiguration() {
-		return filesConfiguration;
-	}
-
-	public void setFilesConfiguration(FilesConfiguration filesConfiguration) {
-		this.filesConfiguration = filesConfiguration;
-	}
 
 	public DbConfiguration getDbConfiguration() {
 		return dbConfiguration;

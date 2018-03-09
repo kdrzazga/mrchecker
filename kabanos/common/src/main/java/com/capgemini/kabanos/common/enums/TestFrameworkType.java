@@ -15,4 +15,9 @@ public enum TestFrameworkType {
 	public String getFileType() {
 		return fileType;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString().concat("- Supporter file types: *" + this.fileType);
+	}
 }

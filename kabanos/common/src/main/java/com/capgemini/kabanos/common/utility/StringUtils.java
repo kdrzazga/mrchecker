@@ -1,5 +1,6 @@
 package com.capgemini.kabanos.common.utility;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -72,6 +73,10 @@ public class StringUtils {
 		return line.replaceAll("\"\\s*\\+\\s*\\w+\\s*\\+\\s*\"", "____");
 	}
 
+	public static String generateHelpMassege(String lines) {
+		return generateHelpMassege(Arrays.asList(lines.split("\n")));
+	}
+	
 	public static String generateHelpMassege(List<String> lines) {
 
 		int maxLength = lines.stream().map(el -> el.replaceAll("\t", "    ").length()).max(Comparator.naturalOrder())
