@@ -15,8 +15,7 @@ public class CucumberExtractor implements IExtractor {
 	private String[] testTerminators = { "Feature", "Background", "Description", testStarter };
 
 	private String[] stepPrefixes = {"Given", "When", "Then", "And", "But", "*"};
-	
-	
+
 	@Override
 	public TestFile extractFunctionsFromTestFile(String path) {
 		String[] lines = FileUtils.readFile(path);
@@ -46,8 +45,7 @@ public class CucumberExtractor implements IExtractor {
 			
 			if (line.trim().startsWith(testStarter)) {
 				isParsingTest = true;
-				testName = line.trim();//TODO extract
-				test = new Test(testName);
+				test = new Test(this.extractScenarioName(testName));
 			}
 		}
 		if(test != null)
@@ -56,15 +54,24 @@ public class CucumberExtractor implements IExtractor {
 		return testFile;
 	}
 
+	private String extractScenarioName(String line) {
+		if(line.trim().startsWith(this.testStarter)) {
+			return line.replaceFirst(this.testStarter, "").trim();
+		}
+		return line;
+	}
+	
 	@Override
 	public List<Preposition> gatherKnowledgeFromTest(Test test) {
 
 		List<Preposition> result = new ArrayList<>();
-		
 		Preposition predecessor = null; 
 		
 		for(String line : test.getLines()) {
-			if(StringUtils.isStartsWithOneOf(line, this.stepPrefixes)) {	
+			if(StringUtils.isStartsWithOneOf(line, this.stepPrefixes)) {
+				
+				line = this.extractGherkinSentence(line);
+				
 				Preposition preposition = new Preposition(line, StringUtils.formatLoggerStep(line));
 
 				if(predecessor != null) {
@@ -77,5 +84,14 @@ public class CucumberExtractor implements IExtractor {
 		}
 
 		return result;
+	}
+
+	private String extractGherkinSentence(String line) {
+		line = line.trim();
+		for(String prefix : this.stepPrefixes) {
+			if(line.startsWith(prefix))
+				return line.replaceFirst(prefix, "").trim();
+		}
+		return line;
 	}
 }

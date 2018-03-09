@@ -12,7 +12,7 @@ import com.capgemini.kabanos.common.domain.TestFile;
 import com.capgemini.kabanos.common.enums.TestFrameworkType;
 import com.capgemini.kabanos.common.utility.ArrayUtils;
 import com.capgemini.kabanos.common.utility.FileUtils;
-import com.capgemini.kabanos.database.DataBase;
+//import com.capgemini.kabanos.database.DataBase;
 import com.capgemini.kabanos.gatherer.extractor.CucumberExtractor;
 import com.capgemini.kabanos.gatherer.extractor.IExtractor;
 import com.capgemini.kabanos.gatherer.extractor.JUnitExtractor;
@@ -24,7 +24,7 @@ public class Gatherer {
 	private final int PARALLEL_ARRAY_SIZE_THRESHOLD = 10;
 	private IExtractor extractor = null;
 
-	public List<List<Preposition>> gatherKnowledge(TestFrameworkType frameworkType, String[] paths) throws Exception {
+	public List<Preposition> gatherKnowledge(TestFrameworkType frameworkType, String[] paths) throws Exception {
 		
 		switch (frameworkType) {
 		case JUNIT:
@@ -50,22 +50,24 @@ public class Gatherer {
 	/*
 	 * list of prepositions in a list of tests
 	 */
-	private List<List<Preposition>> createImplementationPrepositionList(List<TestFile> testFiles) {
+	private List<Preposition> createImplementationPrepositionList(List<TestFile> testFiles) {
 		Stream<TestFile> stream = testFiles.size() > PARALLEL_ARRAY_SIZE_THRESHOLD ? testFiles.parallelStream()
 				: testFiles.stream();
 
-		List<List<Preposition>> result = stream.map(this::extractPrepositionsFromTestFile).reduce(ArrayUtils::megre)
+		List<Preposition> result = stream.map(this::extractPrepositionsFromTestFile).reduce(ArrayUtils::megre)
 				.orElse(new ArrayList<>());
 
 		return result;
 	}
 
-	private List<List<Preposition>> extractPrepositionsFromTestFile(TestFile file) {
-		return file.getTests().stream().map(extractor::gatherKnowledgeFromTest).filter(el -> el.size() > 0)
-				.collect(Collectors.toList());
+	private List<Preposition> extractPrepositionsFromTestFile(TestFile file) {
+		return file.getTests().stream().map(extractor::gatherKnowledgeFromTest).filter(el -> el.size() > 0).reduce((l,r) -> {
+			l.addAll(r);
+			return l;
+		}).get();
 	}
 
-	public boolean saveKnowledge(List<Preposition> knowledge) {
-		return new DataBase().savePrepositions(knowledge);
+	public boolean saveKnowledge(List<Preposition> knowledge) {return true;
+//		return new DataBase().savePrepositions(knowledge);
 	}
 }

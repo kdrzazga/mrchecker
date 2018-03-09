@@ -114,7 +114,7 @@ public class JUnitExtractor implements IExtractor {
 
 					String key = this.extractLoggerText(loggerLine, loggerPrefix, loggerSuffix, loggerStepRegex);
 					preposition = new Preposition(key, StringUtils.formatLoggerStep(key));
-					
+
 					preposition.addPredecessor(predecessor);
 					implementation = new Implementation();
 				}
@@ -131,7 +131,7 @@ public class JUnitExtractor implements IExtractor {
 
 				String key = this.extractLoggerText(loggerLine, loggerPrefix, loggerSuffix, loggerStepRegex);
 				preposition = new Preposition(key, StringUtils.formatLoggerStep(key));
-				
+
 				preposition.addPredecessor(predecessor);
 				implementation = new Implementation();
 			}
@@ -163,8 +163,6 @@ public class JUnitExtractor implements IExtractor {
 			line = m.replaceFirst("").trim();
 		}
 
-		line = StringUtils.formatMultiLineString(line);
-
-		return StringUtils.formatConcatenatedVariablesInString(line);
+		return StringUtils.formatConcatenatedVariablesInString(StringUtils.formatMultiLineString(line));
 	}
 }

@@ -11,6 +11,8 @@ import org.hibernate.criterion.Restrictions;
 
 import com.capgemini.kabanos.common.domain.Implementation;
 import com.capgemini.kabanos.common.domain.Preposition;
+import com.capgemini.kabanos.common.domain.Project;
+//import com.capgemini.kabanos.common.domain.Project;
 import com.capgemini.kabanos.database.utils.HibernateUtils;
 
 import java.util.ArrayList;
@@ -36,8 +38,13 @@ public class DataBase {
 		try {
 			session = HibernateUtils.getSessionFactory().openSession();
 			tran = session.beginTransaction();
-
+			
+//			Project project = null;
+			
 			for(Preposition prep : prepositions) {
+				
+//				System.out.println("FOR   " + project);
+				
 				Preposition fromDB = this.getPreposition(prep.getFormattedLoggerStep(), session);
 
 				prepositionMap.put(prep.getFormattedLoggerStep(), fromDB != null ? fromDB : prep);
@@ -85,12 +92,17 @@ public class DataBase {
 		}
 		return result;
 	}
-	
-	
+
 	public boolean savePreposition(Preposition preposition) {
 		List<Preposition> list = new ArrayList<Preposition>();
 		list.add(preposition);
 		return this.savePrepositions(list);
+	}
+
+	private Project getProject(String projectName, Session session) {
+		Criteria criteria = session.createCriteria(Project.class);
+		criteria.add(Restrictions.eq("name", projectName));
+		return (Project) criteria.uniqueResult();
 	}
 
 	private Preposition getPreposition(String loggerStep, Session session) {
@@ -98,7 +110,7 @@ public class DataBase {
 		criteria.add(Restrictions.eq("formattedLoggerStep", loggerStep));
 		return (Preposition) criteria.uniqueResult();
 	}
-	
+
 	public Preposition getPreposition(String formattedLoggerStep) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Preposition result = this.getPreposition(formattedLoggerStep, session);		
