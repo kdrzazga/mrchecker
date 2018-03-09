@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capgemini.kabanos.common.domain.Preposition;
 import com.capgemini.kabanos.database.DataBase;
 import com.capgemini.kabanos.graphotron.domain.tos.PrepositionTos;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

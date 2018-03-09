@@ -61,7 +61,15 @@ public class StringUtils {
 	}
 
 	public static String formatLoggerStep(String line) {
-		return line.toLowerCase().replaceAll(" ", "").replaceAll("\"\\+\"", "").replaceAll("\"\\+\\w+\\+\"", "____");
+		return line.toLowerCase().replaceAll(" ", "");//.replaceAll("\"\\+\"", "").replaceAll("\"\\+\\w+\\+\"", "____");
+	}
+	
+	public static String formatMultiLineString(String line) {
+		return line.replaceAll("\"\\s*\\+\\s*\"", "");
+	}
+	
+	public static String formatConcatenatedVariablesInString(String line) {
+		return line.replaceAll("\"\\s*\\+\\s*\\w+\\s*\\+\\s*\"", "____");
 	}
 
 	public static String generateHelpMassege(List<String> lines) {

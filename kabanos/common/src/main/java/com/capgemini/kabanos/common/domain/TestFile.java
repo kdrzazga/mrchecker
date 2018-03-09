@@ -5,6 +5,10 @@ import java.util.List;
 
 public class TestFile {
 	
+	public TestFile(String filePath) {
+		this.filePath = filePath;
+	}
+	
 	private String filePath;
 	private List<Test> tests = new ArrayList<Test>();
 

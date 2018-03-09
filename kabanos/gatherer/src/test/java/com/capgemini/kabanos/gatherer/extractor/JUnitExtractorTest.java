@@ -1,32 +1,25 @@
-package com.capgemini.kabanos.gatherer;
+package com.capgemini.kabanos.gatherer.extractor;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
-
-public class GathererTest {
-
-	private Gatherer gatherer;
+public class JUnitExtractorTest {
 	
-	@Before
-	public void init() {
-		this.gatherer = new Gatherer();
-	}
+	private JUnitExtractor junitExtractor = new JUnitExtractor();
 	
 	@Test
     public void extractLoggerText_1() {
-		String multipartLogger = "Logger.log(\"check if elEment is displayed\" +\"second line\" + someVariable + \" second line second part\" +\"third line\");";
+		String multipartLogger = "Logger.log(\"check if elEment is displayed\" +\"second line \" + someVariable + \" second line second part\" +\"third line\");";
 
 		String prefix = "Logger.log(\"";
 		String suffix = "\");";
 		String stepRegex = "";
 		
-		String expecterResult = "checkifelementisdisplayedsecondline____secondlinesecondpartthirdline";
-				
+		String expecterResult = "check if elEment is displayedsecond line ____ second line second partthird line";
+		
 		assertEquals("Wrong extracted step description", 
-				this.gatherer.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
+				this.junitExtractor.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
 				expecterResult);
     }
 	
@@ -38,10 +31,11 @@ public class GathererTest {
 		String suffix = "\");";
 		String stepRegex = "";
 		
-		String expecterResult = "checkifelementisdisplayed";
+		String expecterResult = "CHECK if elEment is displayed";
+
 		
 		assertEquals("Wrong extracted step description", 
-				this.gatherer.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
+				this.junitExtractor.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
 				expecterResult);
     }
 	
@@ -53,10 +47,10 @@ public class GathererTest {
 		String suffix = "\");";
 		String stepRegex = "STEP \\d+.";
 		
-		String expecterResult = "checkifelementisdisplayed";
+		String expecterResult = "CHECK if elEment is displayed";
 		
 		assertEquals("Wrong extracted step description", 
-				this.gatherer.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
+				this.junitExtractor.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
 				expecterResult);
     }
 	
@@ -67,11 +61,11 @@ public class GathererTest {
 		String prefix = "justLog";
 		String suffix = ";";
 		String stepRegex = "STEP \\d+(.)";
-		
-		String expecterResult = "checkifelementisdisplayed";
+
+		String expecterResult = "CHECK if elEment is displayed";
 		
 		assertEquals("Wrong extracted step description", 
-				this.gatherer.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
+				this.junitExtractor.extractLoggerText(multipartLogger,prefix, suffix, stepRegex), 
 				expecterResult);
     }
 }

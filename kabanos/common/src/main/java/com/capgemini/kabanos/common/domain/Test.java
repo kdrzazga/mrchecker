@@ -12,8 +12,11 @@ public class Test {
 	//all test implementation lines- this is used when test files are parsed
 	private List<String> implementationLines = new ArrayList<String>();
 	
-	public Test() 
-	{}
+	public Test() {}
+	public Test(String name) {
+		this.name = name;
+	}
+	
 	
 	public Test(String name, List<Step> steps) {
 		this.name = name;

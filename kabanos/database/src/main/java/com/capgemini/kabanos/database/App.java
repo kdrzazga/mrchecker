@@ -8,7 +8,7 @@ package com.capgemini.kabanos.database;
 public class App {
     public static void main( String[] args ) throws Exception
     {
-        DataBase db = new DataBase();//Configuration.INSTANCE.getDbConfiguration());
+        DataBase db = new DataBase();
           
         System.out.println(db.getAllPrepositions());
     }
