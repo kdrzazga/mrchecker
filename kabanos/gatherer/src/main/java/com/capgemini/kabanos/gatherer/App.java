@@ -1,7 +1,6 @@
 package com.capgemini.kabanos.gatherer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -12,12 +11,6 @@ import com.capgemini.kabanos.common.enums.TestFrameworkType;
 import com.capgemini.kabanos.common.utility.PropertiesUtils;
 import com.capgemini.kabanos.common.utility.StringUtils;
 
-import sun.jvm.hotspot.tools.SysPropsDumper;
-
-/**
- * Hello world!
- *
- */
 public class App {
 	public static void main(String[] args) throws Exception {
 
@@ -37,8 +30,8 @@ public class App {
 			return;
 		}
 
-		String projectName = properties.getProperty("projectName");
-		String testFramework = properties.getProperty("testFramework");
+		String projectName = properties.getProperty(PropertiesUtils.PROJECT_NAME);
+		String testFramework = properties.getProperty(PropertiesUtils.TEST_FRAMEWORK);
 		
 		TestFrameworkType framework = TestFrameworkType.valueOf(testFramework.toUpperCase());
 
@@ -59,14 +52,14 @@ public class App {
 		if (args.length < 1)
 			message.append("At least one path is required\n");
 		try {
-			TestFrameworkType.valueOf(args[1].toUpperCase());
+			TestFrameworkType.valueOf(properties.getProperty(PropertiesUtils.TEST_FRAMEWORK).toUpperCase());
 		} catch (Exception e) {
 			message.append("Invalid 'testFramework' parameter value\n");
 		}
-
-		for(String props : PropertiesUtils.databaseParams)
-			if(properties.getProperty(props).isEmpty())
-				message.append("Empty database parameter: " + props + "\n");
+//TODO commented until database module upgrade
+//		for(String props : PropertiesUtils.databaseParams)
+//			if(properties.getProperty(props).isEmpty())
+//				message.append("Empty database parameter: " + props + "\n");
 		
 		return message.toString();
 	}

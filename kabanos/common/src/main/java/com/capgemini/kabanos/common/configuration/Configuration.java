@@ -13,7 +13,7 @@ public enum Configuration {
 	Configuration() {
 		this.setJiraConfiguration();
 //		this.setFilesConfiguration();
-		this.setDbConfiguration();
+//		this.setDbConfiguration();
 	}
 	
 	
@@ -44,12 +44,9 @@ public enum Configuration {
 	private void setDbConfiguration() {
 		this.dbConfiguration = new DbConfiguration();
 		
-		this.dbConfiguration.setDbUrl("localhost");
+		this.dbConfiguration.setDbUrl("localhost:27017");
 		this.dbConfiguration.setPort(27017);
 		this.dbConfiguration.setDbName("kabanos_impl1");
-		this.dbConfiguration.setCollectionName("prepositions");
-		
-		
 	}
 	public JiraConfiguration getJiraConfiguration() {
 		return jiraConfiguration;
@@ -60,11 +57,11 @@ public enum Configuration {
 	}
 
 
-	public DbConfiguration getDbConfiguration() {
-		return dbConfiguration;
-	}
-
-	public void setDbConfiguration(DbConfiguration dbConfiguration) {
-		this.dbConfiguration = dbConfiguration;
-	}
+//	public DbConfiguration getDbConfiguration() {
+//		return dbConfiguration;
+//	}
+//
+//	public void setDbConfiguration(DbConfiguration dbConfiguration) {
+//		this.dbConfiguration = dbConfiguration;
+//	}
 }

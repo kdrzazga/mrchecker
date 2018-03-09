@@ -10,10 +10,23 @@ public class PropertiesUtils {
 
 	public static final String CONFIGURATION_FILE_NAME = "app.properties";
 
-	public static String[] projectProperties = { "projectName", "projectDescription", "testFramework" };
-	public static String[] databaseParams = { "dbUrl", "dbName", "dbCollectionName", "dbUser", "dbPassword" };
-	public static String[] gathererParams = { "loggerPrefix", "loggerSuffix", "loggerStepRegex" };
-	public static String[] templateParams = { "templatePath", "templateName" };
+	public static final String PROJECT_NAME = "projectName";
+	public static final String PROJECT_DESCRIPTION = "projectDescription";
+	public static final String TEST_FRAMEWORK = "testFramework";
+	public static String[] projectProperties = { PROJECT_NAME, PROJECT_DESCRIPTION, TEST_FRAMEWORK };
+	
+	public static String[] databaseParams = { "dbUrl", "dbName", "dbUser", "dbPassword" };
+
+	public static final String LOGGER_PREFIX = "loggerPrefix";
+	public static final String LOGGER_SUFFIX = "loggerSuffix";
+	public static final String LOGGER_STEP_REGEX = "loggerStepRegex";
+	public static String[] gathererParams = { LOGGER_PREFIX, LOGGER_SUFFIX, LOGGER_STEP_REGEX };
+
+	public static final String TEMPLATE_PATH = "templatePath";
+	public static final String TEMPLATE_FILE_NAME = "templateFileName";
+	public static String[] templateParams = { TEMPLATE_PATH, TEMPLATE_FILE_NAME };
+	
+	
 	public static String[] jiraParams = { "jiraUrl", "jiraUser", "jiraPassword", "jiraTestStartLine",
 			"jiraTestStepPrefixRegex", "jiraTestStepSuffixRegex" };
 
