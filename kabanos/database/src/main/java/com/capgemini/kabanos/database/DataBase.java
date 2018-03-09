@@ -39,14 +39,10 @@ public class DataBase {
 			session = HibernateUtils.getSessionFactory().openSession();
 			tran = session.beginTransaction();
 			
-//			Project project = null;
+			Project project = initProject(prepositions, session);
 			
-			for(Preposition prep : prepositions) {
-				
-//				System.out.println("FOR   " + project);
-				
+			for(Preposition prep : prepositions) {	
 				Preposition fromDB = this.getPreposition(prep.getFormattedLoggerStep(), session);
-
 				prepositionMap.put(prep.getFormattedLoggerStep(), fromDB != null ? fromDB : prep);
 
 				Set<Preposition> newPredecesors = new HashSet<>();				
@@ -56,6 +52,7 @@ public class DataBase {
 				prep.setPredecessors(newPredecesors);
 
 				if(fromDB == null) {
+					prep.setProject(project);
 					session.save(prep);
 					for (Implementation impl : prep.getImplementations()) {
 						session.save(impl);
@@ -93,6 +90,21 @@ public class DataBase {
 		return result;
 	}
 
+	private Project initProject(List<Preposition> prepositions, Session session) {
+		Project project = null;
+		if(!prepositions.isEmpty()) {
+			if(project == null) {
+				project = this.getProject(prepositions.get(0).getProject().getName(), session);
+
+				if(project == null) {
+					project = prepositions.get(0).getProject();
+					session.save(project);
+				}
+			}
+		}
+		return project;
+	}
+
 	public boolean savePreposition(Preposition preposition) {
 		List<Preposition> list = new ArrayList<Preposition>();
 		list.add(preposition);
@@ -128,6 +140,20 @@ public class DataBase {
 		if (session != null)
 			session.close();
 		
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Preposition> getPrepositions(String projectName) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(Preposition.class);
+		Criteria projectCriteria = criteria.createCriteria("project");
+		projectCriteria.add(Restrictions.eq("name", projectName));
+
+		List<Preposition> result = criteria.list();
+		if (session != null)
+			session.close();
+
 		return result;
 	}
 }

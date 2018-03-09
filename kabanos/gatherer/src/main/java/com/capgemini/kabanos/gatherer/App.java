@@ -33,9 +33,9 @@ public class App {
 
 		Project project = new Project(args[0], args[1].toUpperCase());
 
-//		for (Preposition preposition : knowledge) {
-//			preposition.setProject(project);
-//		}
+		for (Preposition preposition : knowledge) {
+			preposition.setProject(project);
+		}
 
 		gatherer.saveKnowledge(knowledge);
 	}

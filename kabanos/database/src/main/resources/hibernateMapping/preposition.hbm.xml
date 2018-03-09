@@ -11,14 +11,18 @@
 		<id name="id" type="long" column="id">
 			<generator class="identity" />
 		</id>
+
+		<many-to-one name="project" column="project"
+			class="com.capgemini.kabanos.common.domain.Project" not-null="true" lazy="false"/>
+
 		<property name="loggerStep" column="loggerStep" type="string"
-			not-null="true" unique="true"/>
-			
-		<property name="formattedLoggerStep" column="formattedLoggerStep" type="string"
-			not-null="true" unique="true"/>
-		
+			not-null="true" unique="true" />
+
+		<property name="formattedLoggerStep" column="formattedLoggerStep"
+			type="string" not-null="true" unique="true" />
+
 		<property name="totalNumber" column="totalNumber" type="long"
-			not-null="true"/>
+			not-null="true" />
 
 
 		<set name="implementations" lazy="false">

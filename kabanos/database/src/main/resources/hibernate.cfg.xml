@@ -31,6 +31,8 @@
 
 
         <property name="hibernate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</property>
+        
+        <mapping resource="hibernateMapping/project.hbm.xml" />
         <mapping resource="hibernateMapping/preposition.hbm.xml" />
         <mapping resource="hibernateMapping/implementation.hbm.xml" />
     </session-factory>

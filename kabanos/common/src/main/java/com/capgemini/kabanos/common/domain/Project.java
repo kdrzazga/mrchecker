@@ -6,6 +6,13 @@ public class Project {
 	private String description;
 	private String testFramework;
 	
+	public Project() {}
+	
+	public Project(String name, String testFramework) {
+		this.name = name;
+		this.testFramework = testFramework;
+	}
+	
 	public long getId() {
 		return id;
 	}

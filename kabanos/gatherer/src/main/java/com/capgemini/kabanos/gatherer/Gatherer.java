@@ -12,7 +12,7 @@ import com.capgemini.kabanos.common.domain.TestFile;
 import com.capgemini.kabanos.common.enums.TestFrameworkType;
 import com.capgemini.kabanos.common.utility.ArrayUtils;
 import com.capgemini.kabanos.common.utility.FileUtils;
-//import com.capgemini.kabanos.database.DataBase;
+import com.capgemini.kabanos.database.DataBase;
 import com.capgemini.kabanos.gatherer.extractor.CucumberExtractor;
 import com.capgemini.kabanos.gatherer.extractor.IExtractor;
 import com.capgemini.kabanos.gatherer.extractor.JUnitExtractor;
@@ -67,7 +67,7 @@ public class Gatherer {
 		}).get();
 	}
 
-	public boolean saveKnowledge(List<Preposition> knowledge) {return true;
-//		return new DataBase().savePrepositions(knowledge);
+	public boolean saveKnowledge(List<Preposition> knowledge) {
+		return new DataBase().savePrepositions(knowledge);
 	}
 }

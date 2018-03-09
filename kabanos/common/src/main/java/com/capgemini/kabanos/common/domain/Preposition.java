@@ -7,11 +7,12 @@ import java.util.Set;
 public class Preposition {
 
 	private long id;
-	private Set<Preposition> predecessors = new HashSet<Preposition>();
 	private String loggerStep;
 	private String formattedLoggerStep;
 	private long totalNumber = 1;
+	private Project project;
 	private Set<Implementation> implementations = new HashSet<Implementation>();
+	private Set<Preposition> predecessors = new HashSet<Preposition>();
 	
 	public Preposition() {}
 	
@@ -88,7 +89,8 @@ public class Preposition {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nKEY:\n\t" + this.loggerStep);
 		sb.append("\nFORMATTED KEY:\n\t" + this.formattedLoggerStep);
-		sb.append("\nfound times:\n\t" + this.totalNumber + "\n");
+		sb.append("\nFOUND TIMES:\n\t" + this.totalNumber);
+		sb.append("\nPROJECT:\n\t" + this.project.getName() + "\n");
 		sb.append("IMPLEMENTATION:\n");
 		
 		for(Implementation implementation : this.implementations) {
@@ -145,5 +147,13 @@ public class Preposition {
 
 	public void setFormattedLoggerStep(String formattedLoggerStep) {
 		this.formattedLoggerStep = formattedLoggerStep;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

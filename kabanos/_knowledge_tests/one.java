@@ -121,6 +121,9 @@ public class MessageTest extends BaseTest {
 		Logger.log("Open messages");
 		Facebook.INSTANCE.openMessages();
 
+		Logger.log("Go to contacts");
+		Facebook.INSTANCE.logOut();
+
 		Logger.log("Log out from facebook");
 		Facebook.INSTANCE.logOut();
 	}
