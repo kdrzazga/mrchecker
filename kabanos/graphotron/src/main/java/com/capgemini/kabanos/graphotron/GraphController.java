@@ -3,12 +3,9 @@ package com.capgemini.kabanos.graphotron;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.kabanos.common.domain.Preposition;
-import com.capgemini.kabanos.common.enums.ApplicationConfigType;
-import com.capgemini.kabanos.common.utility.PropertiesUtils;
 import com.capgemini.kabanos.database.DataBase;
 import com.capgemini.kabanos.graphotron.domain.tos.PrepositionTos;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,6 +30,8 @@ public class GraphController {
         	result.setLoggerStep(el.getLoggerStep());
         	result.setPredecessors(this.getIdList(el));
         	result.setImplementations(el.getImplementations().size());
+        	result.setWasFirstStep(el.isWasFirstStep());
+        	result.setWasLastStep(el.isWasLastStep());
         	
         	return result; 
         }).collect(Collectors.toList());

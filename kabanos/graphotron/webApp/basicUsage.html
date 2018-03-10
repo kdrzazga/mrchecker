@@ -35,10 +35,29 @@
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 
+			
+				var getNodeColor = (el) => {
+								
+					var first = el.wasFirstStep;
+					var last = el.wasLastStep;
+					var color = '#00FFFF';
+					
+					if(first && last) {
+						color = '#AAFF99';
+					}
+					else if(first) {
+						color = '#33FF33';
+					}
+					else if(last) {
+						color = '#FF9999';
+					}
+					
+					return {
+						background: color, border: 'black'
+					}
+				}
 				
 				var response = JSON.parse(xhr.response);
-				
-				console.log(response.length);
 				
 				var nodeArray = [];
 				var edgeArray = [];
@@ -48,7 +67,7 @@
 					nodeArray.push({
 						id: el.id,
 						label: el.loggerStep,
-						color: {background: el.predecessors.length == 0 ? 'red' : '#00FFFF', border: 'black'}
+						color: getNodeColor(el)
 					});
 					
 					

@@ -29,14 +29,14 @@ import com.capgemini.kabanos.common.utility.StringUtils;
 public class JUnitExtractor implements IExtractor {
 
 	private Properties properties;
-	
+
 	private String[] testPrefixes = { "@Test", "@BeforeClass", "@Before", "@BeforeEach", "@BeforeAll", "@AfterClass",
 			"@After", "@AfterEach", "@AfterAll" };
 
 	public JUnitExtractor(Properties properties) {
 		this.properties = properties;
 	}
-	
+
 	@Override
 	public TestFile extractFunctionsFromTestFile(String path) {
 
@@ -143,8 +143,11 @@ public class JUnitExtractor implements IExtractor {
 		}
 
 		if (preposition != null) {
+			result.get(0).setWasFirstStep(true);
+			preposition.setWasLastStep(true);
 			if (implementation != null)
 				preposition.addImplementation(implementation);
+
 			result.add(preposition);
 		}
 

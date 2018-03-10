@@ -65,14 +65,14 @@ public class CucumberExtractor implements IExtractor {
 	public List<Preposition> gatherKnowledgeFromTest(Test test) {
 
 		List<Preposition> result = new ArrayList<>();
-		Preposition predecessor = null; 
+		Preposition preposition = null, predecessor = null; 
 		
 		for(String line : test.getLines()) {
 			if(StringUtils.isStartsWithOneOf(line, this.stepPrefixes)) {
 				
 				line = this.extractGherkinSentence(line);
 				
-				Preposition preposition = new Preposition(line, StringUtils.formatLoggerStep(line));
+				preposition = new Preposition(line, StringUtils.formatLoggerStep(line));
 
 				if(predecessor != null) {
 					preposition.addPredecessor(predecessor);
@@ -83,6 +83,12 @@ public class CucumberExtractor implements IExtractor {
 			}
 		}
 
+		//step can be last in one test, but in the middle of a different test
+		if(preposition != null) {
+			result.get(0).setWasFirstStep(true);
+			preposition.setWasLastStep(true);
+		}
+		
 		return result;
 	}
 

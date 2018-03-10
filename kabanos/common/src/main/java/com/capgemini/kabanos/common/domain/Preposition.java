@@ -13,52 +13,43 @@ public class Preposition {
 	private Project project;
 	private Set<Implementation> implementations = new HashSet<Implementation>();
 	private Set<Preposition> predecessors = new HashSet<Preposition>();
-	
-	public Preposition() {}
-	
+	private boolean wasFirstStep;
+	private boolean wasLastStep;
+
+	public Preposition() {
+	}
+
 	public Preposition(String loggerStep, String formattedLoggerStep) {
 		this.loggerStep = loggerStep;
 		this.formattedLoggerStep = formattedLoggerStep;
 	}
-	
+
 	public void addImplementation(Implementation impl) {
-		for(Implementation iter : this.implementations) {
-			if(iter.equals(impl)) {
+		for (Implementation iter : this.implementations) {
+			if (iter.equals(impl)) {
 				iter.incrementOccurences(impl.getOccurrences());
 				return;
 			}
 		}
-		//if not find in set then add
+		// if not find in set then add
 		implementations.add(impl);
-	}	
-	
+	}
+
 	public void addImplementations(Collection<Implementation> impls) {
-		for(Implementation impl : impls) {
+		for (Implementation impl : impls) {
 			this.addImplementation(impl);
 		}
-	}	
-	
-	public void addPredecessor(Preposition pred) { 
-		if(pred != null)
+	}
+
+	public void addPredecessor(Preposition pred) {
+		if (pred != null)
 			this.predecessors.add(pred);
-	}	
-	
+	}
+
 	public void addPredecessors(Collection<Preposition> preds) {
 		this.predecessors.addAll(preds);
-	}		
-	public String getLoggerStep() {
-		return loggerStep;
 	}
-	public void setLoggerStep(String loggerStep) {
-		this.loggerStep = loggerStep;
-	}
-	public Set<Implementation> getImplementations() {
-		return implementations;
-	}
-	public void setImplementations(Set<Implementation> implementations) {
-		this.implementations = implementations;
-	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,22 +81,23 @@ public class Preposition {
 		sb.append("\nKEY:\n\t" + this.loggerStep);
 		sb.append("\nFORMATTED KEY:\n\t" + this.formattedLoggerStep);
 		sb.append("\nFOUND TIMES:\n\t" + this.totalNumber);
-		sb.append("\nPROJECT:\n\t" + this.project.getName() + "\n");
+		sb.append("\nPROJECT:\n\t" + this.project.getName());
+		sb.append("\nWAS FIRST:\n\t" + this.wasFirstStep);
+		sb.append("\nWAS LAST:\n\t" + this.wasLastStep + "\n");
 		sb.append("IMPLEMENTATION:\n");
-		
-		for(Implementation implementation : this.implementations) {
-			for(String line : implementation.getLines().split("\n")) {
+
+		for (Implementation implementation : this.implementations) {
+			for (String line : implementation.getLines().split("\n")) {
 				sb.append("\t" + line.toString() + "\n");
 			}
 		}
-		
+
 		sb.append("\nPREDECESSORS:\n");
-		if(this.predecessors.size() == 0) {
+		if (this.predecessors.size() == 0) {
 			sb.append("\t No predecessor\n");
-		}
-		else {
+		} else {
 			int x = 1;
-			for(Preposition prep : this.predecessors) {
+			for (Preposition prep : this.predecessors) {
 				sb.append("\t" + (x++) + ") " + prep.getLoggerStep() + "\n");
 			}
 		}
@@ -132,7 +124,7 @@ public class Preposition {
 	public void addTotalNumber(long totalNumber) {
 		this.totalNumber += totalNumber;
 	}
-	
+
 	public long getTotalNumber() {
 		return totalNumber;
 	}
@@ -156,4 +148,37 @@ public class Preposition {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
+	public boolean isWasLastStep() {
+		return wasLastStep;
+	}
+
+	public void setWasLastStep(boolean wasLastStep) {
+		this.wasLastStep = wasLastStep;
+	}
+
+	public boolean isWasFirstStep() {
+		return wasFirstStep;
+	}
+
+	public void setWasFirstStep(boolean wasFirstStep) {
+		this.wasFirstStep = wasFirstStep;
+	}
+
+	public String getLoggerStep() {
+		return loggerStep;
+	}
+
+	public void setLoggerStep(String loggerStep) {
+		this.loggerStep = loggerStep;
+	}
+
+	public Set<Implementation> getImplementations() {
+		return implementations;
+	}
+
+	public void setImplementations(Set<Implementation> implementations) {
+		this.implementations = implementations;
+	}
+
 }

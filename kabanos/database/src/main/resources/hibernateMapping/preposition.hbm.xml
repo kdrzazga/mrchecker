@@ -13,7 +13,8 @@
 		</id>
 
 		<many-to-one name="project" column="project"
-			class="com.capgemini.kabanos.common.domain.Project" not-null="true" lazy="false"/>
+			class="com.capgemini.kabanos.common.domain.Project" not-null="true"
+			lazy="false" />
 
 		<property name="loggerStep" column="loggerStep" type="string"
 			not-null="true" unique="true" />
@@ -24,6 +25,8 @@
 		<property name="totalNumber" column="totalNumber" type="long"
 			not-null="true" />
 
+		<property name="wasFirstStep" column="wasFirstStep" type="boolean" />
+		<property name="wasLastStep" column="wasLastStep" type="boolean" />
 
 		<set name="implementations" lazy="false">
 			<key column="prepositionId" not-null="false" />

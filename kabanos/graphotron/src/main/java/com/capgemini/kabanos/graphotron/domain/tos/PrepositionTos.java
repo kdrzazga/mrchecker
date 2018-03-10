@@ -7,6 +7,8 @@ public class PrepositionTos {
 	private long totalNumber;
 	private Long[] predecessors;
 	private String loggerStep;
+	private boolean wasFirstStep;
+	private boolean wasLastStep;
 	
 	public Long[] getPredecessors() {
 		return predecessors;
@@ -37,5 +39,17 @@ public class PrepositionTos {
 	}
 	public void setTotalNumber(long totalNumber) {
 		this.totalNumber = totalNumber;
+	}
+	public boolean isWasLastStep() {
+		return wasLastStep;
+	}
+	public void setWasLastStep(boolean wasLastStep) {
+		this.wasLastStep = wasLastStep;
+	}
+	public boolean isWasFirstStep() {
+		return wasFirstStep;
+	}
+	public void setWasFirstStep(boolean wasFirstStep) {
+		this.wasFirstStep = wasFirstStep;
 	}
 }

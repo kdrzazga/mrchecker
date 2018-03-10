@@ -70,6 +70,9 @@ public class DataBase {
 					fromDB.addTotalNumber(prep.getTotalNumber());
 					fromDB.addImplementations(prep.getImplementations());
 					fromDB.addPredecessors(prep.getPredecessors());
+					//was test at least once last
+					fromDB.setWasLastStep(fromDB.isWasLastStep() || prep.isWasLastStep());
+					
 					session.update(fromDB);
 
 					for (Implementation impl : fromDB.getImplementations()) {

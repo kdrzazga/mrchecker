@@ -24,7 +24,7 @@ public class App {
 			
 			validationError = "ERRORS:\n"  + validationError;
 			
-			System.out.println(StringUtils.generateHelpMassege(validationError));
+			System.out.println(StringUtils.generateHelpMassege(validationError, true));
 			
 			printUsageHelp();
 			return;
@@ -88,6 +88,6 @@ public class App {
 			message.add("- " + props);
 		}
 
-		System.out.println(message);
+		System.out.println(StringUtils.generateHelpMassege(message, false));
 	}
 }
