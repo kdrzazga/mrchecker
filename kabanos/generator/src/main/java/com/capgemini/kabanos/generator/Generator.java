@@ -32,7 +32,6 @@ public class Generator {
 
 	public Generator(Properties properties) {
 		this.properties = properties;
-		this.database = new DataBase(properties);
 	}
 
 	private Template initTemplate() throws IOException {
@@ -92,9 +91,13 @@ public class Generator {
 	}
 
 	private void addPrepositions(Test test) {
+
+		this.database = new DataBase(this.properties);
+
 		for (Step step : test.getSteps()) {
 
-			Preposition prep = database.getPreposition(StringUtils.formatLoggerStep(step.getDescription()));
+			Preposition prep = database.getPreposition(this.properties.getProperty(PropertiesUtils.PROJECT_NAME),
+					StringUtils.formatLoggerStep(step.getDescription()));
 
 			List<Implementation> impls = new ArrayList<>();
 
@@ -105,5 +108,7 @@ public class Generator {
 
 			step.setImplementations(impls);
 		}
+
+		this.database.shutdown();
 	}
 }

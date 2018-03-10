@@ -5,16 +5,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
-import org.hibernate.EntityMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import com.capgemini.kabanos.common.domain.Implementation;
 import com.capgemini.kabanos.common.domain.Preposition;
@@ -48,13 +45,13 @@ public class DataBase {
 		Map<String, Preposition> prepositionMap = new HashMap<>();
 
 		try {
-			session = HibernateUtils.getSessionFactory().openSession();
+			session = HibernateUtils.getSessionFactory(this.properties).openSession();
 			tran = session.beginTransaction();
 
 			Project project = initProject(prepositions, session);
 
 			for (Preposition prep : prepositions) {
-				Preposition fromDB = this.getPreposition(prep.getFormattedLoggerStep(), session);
+				Preposition fromDB = this.getPreposition(project.getName(), prep.getFormattedLoggerStep(), session);
 				prepositionMap.put(prep.getFormattedLoggerStep(), fromDB != null ? fromDB : prep);
 
 				Set<Preposition> newPredecesors = new HashSet<>();
@@ -124,26 +121,37 @@ public class DataBase {
 	}
 
 	private Project getProject(String projectName, Session session) {
-		Criteria criteria = session.createCriteria(Project.class);
-		criteria.add(Restrictions.eq("name", projectName));
-		return (Project) criteria.uniqueResult();
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery<Project> criteria = criteriaBuilder.createQuery(Project.class);
+
+		Root<Project> root = criteria.from(Project.class);
+		criteria.where(criteriaBuilder.equal(root.get("name"), projectName));
+
+		return session.createQuery(criteria).uniqueResult();
 	}
 
-	private Preposition getPreposition(String loggerStep, Session session) {
-		Criteria criteria = session.createCriteria(Preposition.class);
-		criteria.add(Restrictions.eq("formattedLoggerStep", loggerStep));
-		return (Preposition) criteria.uniqueResult();
+	private Preposition getPreposition(String projectName, String loggerStep, Session session) {
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery<Preposition> criteria = criteriaBuilder.createQuery(Preposition.class);
+
+		Root<Preposition> root = criteria.from(Preposition.class);
+
+		Predicate and = criteriaBuilder.and(criteriaBuilder.equal(root.get("project").get("name"), projectName),
+				criteriaBuilder.equal(root.get("formattedLoggerStep"), loggerStep));
+		criteria.where(and);
+
+		return session.createQuery(criteria).uniqueResult();
 	}
 
-	public Preposition getPreposition(String formattedLoggerStep) {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Preposition result = this.getPreposition(formattedLoggerStep, session);
+	public Preposition getPreposition(String projectName, String formattedLoggerStep) {
+		Session session = HibernateUtils.getSessionFactory(this.properties).openSession();
+		Preposition result = this.getPreposition(projectName, formattedLoggerStep, session);
 		session.close();
 		return result;
 	}
 
 	public List<Preposition> getAllPrepositions() {
-		Session session = HibernateUtils.getSessionFactory().openSession();
+		Session session = HibernateUtils.getSessionFactory(this.properties).openSession();
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Preposition> criteria = builder.createQuery(Preposition.class);
@@ -160,7 +168,7 @@ public class DataBase {
 	}
 
 	public List<Preposition> getPrepositions(String projectName) {
-		Session session = HibernateUtils.getSessionFactory().openSession();
+		Session session = HibernateUtils.getSessionFactory(this.properties).openSession();
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Preposition> criteria = builder.createQuery(Preposition.class);

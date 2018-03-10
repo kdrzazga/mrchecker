@@ -1,82 +1,52 @@
 package com.capgemini.kabanos.database.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.AvailableSettings;
+
+import com.capgemini.kabanos.common.utility.PropertiesUtils;
 
 public class HibernateUtils {
 
-	
-	
-	
 	private static StandardServiceRegistry registry;
-	  private static SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 
-	  public static SessionFactory getSessionFactory() {
-	    if (sessionFactory == null) {
-	      try {
-	        // Create registry
-	        
-	    	  StandardServiceRegistryBuilder b = new StandardServiceRegistryBuilder()
-			            .configure();
-	    	  registry = b
-	            .build();
+	public static SessionFactory getSessionFactory(Properties properties) {
+		if (sessionFactory == null) {
+			try {
 
-	        
-	        
-	        // Create MetadataSources
-	        MetadataSources sources = new MetadataSources(registry);
+				Map<String, String> m = new HashMap<>();
+				m.put(AvailableSettings.URL, properties.getProperty(PropertiesUtils.DB_URL));
+				m.put(AvailableSettings.USER, properties.getProperty(PropertiesUtils.DB_USER));
+				m.put(AvailableSettings.PASS, properties.getProperty(PropertiesUtils.DB_PSWD));
 
-	        // Create Metadata
-	        Metadata metadata = sources.getMetadataBuilder().build();
+				registry = new StandardServiceRegistryBuilder().configure().applySettings(m).build();
 
-	        // Create SessionFactory
-	        sessionFactory = metadata.getSessionFactoryBuilder().build();
+				// Create SessionFactory
+				sessionFactory = new MetadataSources(registry).getMetadataBuilder().build().getSessionFactoryBuilder()
+						.build();
 
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	        if (registry != null) {
-	          StandardServiceRegistryBuilder.destroy(registry);
-	        }
-	      }
-	    }
-	    return sessionFactory;
-	  }
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (registry != null) {
+					StandardServiceRegistryBuilder.destroy(registry);
+				}
+			}
+		}
+		return sessionFactory;
+	}
 
-	  public static void shutdown() {
-	    if (registry != null) {
-	      StandardServiceRegistryBuilder.destroy(registry);
-	    }
-	  }
-	
-	
-	
-	
-	
-    private HibernateUtils() {}
-//
-//    private static final SessionFactory sessionFactory;
-//
-//    static {
-//        try {
-//        	
-//        	System.out.println();
-//        	
-//            sessionFactory = new Configuration().configure().buildSessionFactory();           
-//        } catch (Throwable ex) {
-//            System.err.println("Initial SessionFactory creation failed. " + ex);
-//            throw new ExceptionInInitializerError(ex);
-//        }
-//    }
-//
-//    public static SessionFactory getSessionFactory() {
-//        return sessionFactory;
-//    }
-//    
-//   public static void shutdown() {
-//        getSessionFactory().close();
-//    }    
+	public static void shutdown() {
+		if (registry != null) {
+			StandardServiceRegistryBuilder.destroy(registry);
+		}
+	}
+
+	private HibernateUtils() {}
 }

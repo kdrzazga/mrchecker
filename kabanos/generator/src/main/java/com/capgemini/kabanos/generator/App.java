@@ -16,8 +16,7 @@ public class App
     {
     	Properties properties = PropertiesUtils.loadProperties(ApplicationConfigType.GENERATOR);
     	
-        System.out.println( "Hello World!" );
-
+    	
         String template = new Generator(properties).generateTemplate("KAB-1", SourceType.JIRA);
 
         System.out.println(template);
