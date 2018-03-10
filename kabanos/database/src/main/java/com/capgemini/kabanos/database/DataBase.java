@@ -5,7 +5,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Criteria;
+import org.hibernate.EntityMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -21,9 +27,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class DataBase {
-	
+
 	private Properties properties;
-	
+
 	public DataBase(Properties properties) {
 		this.properties = properties;
 	}
@@ -34,50 +40,50 @@ public class DataBase {
 		Transaction tran = null;
 
 		/*
-		 * objects must point to a proper reference- once to a new created object and once to a object 
-		 * taken form the database. if a predecessor is present in the DB then the object must point to a BDobject
-		 * if it point to a wrong object the a "transient" error is thrown
+		 * objects must point to a proper reference- once to a new created object and
+		 * once to a object taken form the database. if a predecessor is present in the
+		 * DB then the object must point to a BDobject if it point to a wrong object the
+		 * a "transient" error is thrown
 		 */
 		Map<String, Preposition> prepositionMap = new HashMap<>();
 
 		try {
 			session = HibernateUtils.getSessionFactory().openSession();
 			tran = session.beginTransaction();
-			
+
 			Project project = initProject(prepositions, session);
-			
-			for(Preposition prep : prepositions) {	
+
+			for (Preposition prep : prepositions) {
 				Preposition fromDB = this.getPreposition(prep.getFormattedLoggerStep(), session);
 				prepositionMap.put(prep.getFormattedLoggerStep(), fromDB != null ? fromDB : prep);
 
-				Set<Preposition> newPredecesors = new HashSet<>();				
-				for(Preposition pred : prep.getPredecessors()) {
+				Set<Preposition> newPredecesors = new HashSet<>();
+				for (Preposition pred : prep.getPredecessors()) {
 					newPredecesors.add(prepositionMap.getOrDefault(pred.getFormattedLoggerStep(), pred));
 				}
 				prep.setPredecessors(newPredecesors);
 
-				if(fromDB == null) {
+				if (fromDB == null) {
 					prep.setProject(project);
 					session.save(prep);
 					for (Implementation impl : prep.getImplementations()) {
 						session.save(impl);
 					}
-				}
-				else {
+				} else {
 					fromDB.addTotalNumber(prep.getTotalNumber());
 					fromDB.addImplementations(prep.getImplementations());
 					fromDB.addPredecessors(prep.getPredecessors());
 					session.update(fromDB);
-					
+
 					for (Implementation impl : fromDB.getImplementations()) {
-						if(impl.getOccurrences() == 1)
+						if (impl.getOccurrences() == 1)
 							session.save(impl);
-						else 
+						else
 							session.update(impl);
 					}
 				}
 			}
-						
+
 			tran.commit();
 			System.out.println("Saved: " + prepositions.size());
 			result = true;
@@ -92,16 +98,17 @@ public class DataBase {
 			if (session != null)
 				session.close();
 		}
+
 		return result;
 	}
 
 	private Project initProject(List<Preposition> prepositions, Session session) {
 		Project project = null;
-		if(!prepositions.isEmpty()) {
-			if(project == null) {
+		if (!prepositions.isEmpty()) {
+			if (project == null) {
 				project = this.getProject(prepositions.get(0).getProject().getName(), session);
 
-				if(project == null) {
+				if (project == null) {
 					project = prepositions.get(0).getProject();
 					session.save(project);
 				}
@@ -130,35 +137,46 @@ public class DataBase {
 
 	public Preposition getPreposition(String formattedLoggerStep) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Preposition result = this.getPreposition(formattedLoggerStep, session);		
+		Preposition result = this.getPreposition(formattedLoggerStep, session);
 		session.close();
 		return result;
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	public List<Preposition> getAllPrepositions() {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Preposition.class);
 
-		List<Preposition> result = criteria.list();
-		
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Preposition> criteria = builder.createQuery(Preposition.class);
+
+		Root<Preposition> root = criteria.from(Preposition.class);
+		criteria.select(root);
+
+		List<Preposition> result = session.createQuery(criteria).getResultList();
+
 		if (session != null)
 			session.close();
-		
+
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Preposition> getPrepositions(String projectName) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Preposition.class);
-		Criteria projectCriteria = criteria.createCriteria("project");
-		projectCriteria.add(Restrictions.eq("name", projectName));
 
-		List<Preposition> result = criteria.list();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Preposition> criteria = builder.createQuery(Preposition.class);
+
+		Root<Preposition> root = criteria.from(Preposition.class);
+
+		criteria.where(builder.equal(root.get("project").get("name"), projectName));
+		List<Preposition> result = session.createQuery(criteria).getResultList();
+
 		if (session != null)
 			session.close();
 
 		return result;
+	}
+
+	public void shutdown() {
+		HibernateUtils.shutdown();
 	}
 }

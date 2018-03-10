@@ -34,7 +34,7 @@
 
 		<junit.version>4.12</junit.version>
 
-		<hibernate.version>4.1.2.Final</hibernate.version>
+		<hibernate.version>5.2.14.Final</hibernate.version>
 
 		<h2.version>1.4.196</h2.version>
 
@@ -72,13 +72,31 @@
 		</dependency>
 
 
-<!-- removed for development
+		<!-- removed for development <dependency> <groupId>com.capgemini.kabanos</groupId> 
+			<artifactId>common</artifactId> <version>${kabanos.common.version}</version> 
+			</dependency> -->
+
+
+		<!-- missing modules in newer java versions -->
 		<dependency>
-			<groupId>com.capgemini.kabanos</groupId>
-			<artifactId>common</artifactId>
-			<version>${kabanos.common.version}</version>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.2.11</version>
 		</dependency>
- -->
- 
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 	</dependencies>
 </project>

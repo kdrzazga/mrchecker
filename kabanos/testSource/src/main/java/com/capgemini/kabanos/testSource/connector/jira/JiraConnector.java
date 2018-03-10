@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
@@ -12,22 +13,22 @@ import com.atlassian.jira.rest.client.api.domain.SearchResult;
 import com.atlassian.jira.rest.client.api.domain.User;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
 import com.atlassian.util.concurrent.Promise;
-import com.capgemini.kabanos.common.configuration.Configuration;
 import com.capgemini.kabanos.common.domain.Step;
 import com.capgemini.kabanos.common.domain.Test;
 import com.capgemini.kabanos.common.exception.LoginException;
+import com.capgemini.kabanos.common.utility.PropertiesUtils;
 import com.capgemini.kabanos.testSource.connector.IConnector;
-
 
 
 //TODO sprawdzic czy dziala po refaktorze!!!!!!!!!!!!
 public class JiraConnector implements IConnector {
 
+	private Properties properties;
 	private String jiraUrl;
 	private JiraRestClient jiraClient;
 
-	public JiraConnector(String jiraUrl) {
-		this.jiraUrl = jiraUrl;
+	public JiraConnector(Properties properties) {
+		this.properties = properties;
 	}
 
 	public boolean login(String user, String password) throws LoginException {
@@ -84,8 +85,8 @@ public class JiraConnector implements IConnector {
 		List<Step> result = new ArrayList<Step>();
 		String[] lines = issueDescription.split(System.lineSeparator());
 
-		String prefix = Configuration.INSTANCE.getJiraConfiguration().getTestStepPrefixRegex();
-		String suffix = Configuration.INSTANCE.getJiraConfiguration().getTestStepSuffixRegex();
+		String prefix = this.properties.getProperty(PropertiesUtils.JIRA_TEST_PREFIX_REGEX);
+		String suffix = this.properties.getProperty(PropertiesUtils.JIRA_TEST_SUFFIX_REGEX);
 
 		String startRegex = "^" + prefix + ".*";
 		String endRegex = "^.*" + suffix + "$";

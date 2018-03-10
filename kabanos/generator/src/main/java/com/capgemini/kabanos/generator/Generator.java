@@ -1,6 +1,5 @@
 package com.capgemini.kabanos.generator;
 
-import com.capgemini.kabanos.common.configuration.Configuration;
 import com.capgemini.kabanos.common.domain.Implementation;
 import com.capgemini.kabanos.common.domain.Preposition;
 import com.capgemini.kabanos.common.domain.Step;
@@ -10,8 +9,6 @@ import com.capgemini.kabanos.common.utility.PropertiesUtils;
 import com.capgemini.kabanos.common.utility.StringUtils;
 import com.capgemini.kabanos.database.DataBase;
 import com.capgemini.kabanos.generator.mock.MockJiraTestGenerator;
-import com.capgemini.kabanos.testSource.connector.IConnector;
-import com.capgemini.kabanos.testSource.connector.jira.JiraConnector;
 
 import java.io.File;
 import java.io.IOException;

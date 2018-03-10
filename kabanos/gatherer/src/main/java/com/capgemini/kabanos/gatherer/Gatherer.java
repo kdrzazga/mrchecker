@@ -73,6 +73,16 @@ public class Gatherer {
 	}
 
 	public boolean saveKnowledge(List<Preposition> knowledge) {
-		return new DataBase(this.properties).savePrepositions(knowledge);
+		boolean result = false;
+		DataBase db = null;
+		try {
+			db = new DataBase(this.properties);
+			result = db.savePrepositions(knowledge);
+		} finally {
+			if (db != null)
+				db.shutdown();
+		}
+
+		return result;
 	}
 }

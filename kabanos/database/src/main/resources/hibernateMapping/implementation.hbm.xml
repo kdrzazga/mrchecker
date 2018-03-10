@@ -11,8 +11,7 @@
 		<id name="id" type="long" column="id">
 			<generator class="identity" />
 		</id>
-		<property name="lines" type="string" not-null="true"
-			unique-key="multicolumn_unique_key_name" >
+		<property name="lines" type="string" not-null="true" >
 			<column name="lines" length="1024" />
 		</property>
 		<property name="occurrences" column="occurrences" type="integer" />
