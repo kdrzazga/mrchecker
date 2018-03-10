@@ -15,7 +15,7 @@ public class App {
 	public static void main(String[] args) throws Exception {
 
 		//TODO for testing
-		args = new String[] { "../_knowledge_tests/" };
+		//args = new String[] { "../_knowledge_tests/" };
 		
 		Properties properties = PropertiesUtils.loadProperties(ApplicationConfigType.GATHERER);
 
@@ -56,10 +56,10 @@ public class App {
 		} catch (Exception e) {
 			message.append("Invalid 'testFramework' parameter value\n");
 		}
-//TODO commented until database module upgrade
-//		for(String props : PropertiesUtils.databaseParams)
-//			if(properties.getProperty(props).isEmpty())
-//				message.append("Empty database parameter: " + props + "\n");
+
+		for(String props : PropertiesUtils.databaseParams)
+			if(properties.getProperty(props).isEmpty())
+				message.append("Empty database parameter: " + props + "\n");
 		
 		return message.toString();
 	}
@@ -68,7 +68,7 @@ public class App {
 		List<String> message = new ArrayList<>();
 
 		message.add("Example usage");
-		message.add("    java file_name.jar PATH_1 PATH_2 PATH_3");
+		message.add("    java -jar file_name.jar PATH_1 PATH_2 PATH_3");
 		message.add("");
 		message.add("Where:");
 		message.add("");
@@ -88,6 +88,6 @@ public class App {
 			message.add("- " + props);
 		}
 
-		System.out.println(StringUtils.generateHelpMassege(message));
+		System.out.println(message);
 	}
 }

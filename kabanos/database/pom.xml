@@ -31,18 +31,22 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
 		<junit.version>4.12</junit.version>
-
 		<hibernate.version>5.2.14.Final</hibernate.version>
-
 		<h2.version>1.4.196</h2.version>
-
+		<jaxb.version>2.2.11</jaxb.version>
+		<javax.activation.version>1.1.1</javax.activation.version>
 		<kabanos.common.version>0.0.1</kabanos.common.version>
-
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.capgemini.kabanos</groupId>
+			<artifactId>common</artifactId>
+			<version>${kabanos.common.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -50,16 +54,12 @@
 			<scope>test</scope>
 		</dependency>
 
-
-
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 		</dependency>
 
-		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -71,32 +71,25 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-
-		<!-- removed for development <dependency> <groupId>com.capgemini.kabanos</groupId> 
-			<artifactId>common</artifactId> <version>${kabanos.common.version}</version> 
-			</dependency> -->
-
-
-		<!-- missing modules in newer java versions -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>2.2.11</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>2.2.11</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.11</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
-			<version>1.1.1</version>
+			<version>${javax.activation.version}</version>
 		</dependency>
 	</dependencies>
 </project>
