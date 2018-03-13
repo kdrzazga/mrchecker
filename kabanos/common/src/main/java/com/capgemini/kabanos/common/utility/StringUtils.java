@@ -6,6 +6,8 @@ import java.util.List;
 
 public class StringUtils {
 
+	public static final String MULTI_LINE_COMMENT_REGEX = "\\/[*](((?!([*]\\/)).)*\\n?)*[*]\\/";
+	
 	public static String[] trimArray(String[] array) {
 		for (int x = 0; x < array.length; x++) {
 			array[x] = array[x].trim();

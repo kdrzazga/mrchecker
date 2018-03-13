@@ -30,6 +30,10 @@ public class StepUtils {
 		//TODO this kind of regex (embedded) are not covered
 		//   (\\d+([.]\\d+)?)    
 		// :( fix this!!!!!!!!
+		//algorytm na zagniezdzone:
+		// rekurencja -> znajdz (regex), zastap i zapisz w mapie co czym, rekurecja
+		// jak koniec to odmiec zamienione czesci
+		//na koncu przeniesc ten regex do stringUtils
 		final String regexDetectingRegex = "\\(((?!\\))(\\\\\\))*.)*\\)";
 
 		Pattern p = Pattern.compile(regexDetectingRegex);

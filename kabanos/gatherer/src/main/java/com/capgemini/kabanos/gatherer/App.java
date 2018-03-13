@@ -14,25 +14,18 @@ import com.capgemini.kabanos.common.utility.StringUtils;
 public class App {
 	public static void main(String[] args) throws Exception {
 
-		//TODO for testing
-		//args = new String[] { "../_knowledge_tests/" };
-		
+		// TODO for testing
+		// args = new String[] { "../_knowledge_tests/" };
+
 		Properties properties = PropertiesUtils.loadProperties(ApplicationConfigType.GATHERER);
 
-		String validationError = validateInputParameters(args, properties);
-		if (!validationError.isEmpty()) {
-			
-			validationError = "ERRORS:\n"  + validationError;
-			
-			System.out.println(StringUtils.generateHelpMassege(validationError, true));
-			
-			printUsageHelp();
+		if (!validateInputParameters(args, properties)) {
 			return;
 		}
 
 		String projectName = properties.getProperty(PropertiesUtils.PROJECT_NAME);
 		String testFramework = properties.getProperty(PropertiesUtils.TEST_FRAMEWORK);
-		
+
 		TestFrameworkType framework = TestFrameworkType.valueOf(testFramework.toUpperCase());
 
 		Gatherer gatherer = new Gatherer(properties);
@@ -47,7 +40,7 @@ public class App {
 		gatherer.saveKnowledge(knowledge);
 	}
 
-	private static String validateInputParameters(String[] args, Properties properties) {
+	private static boolean validateInputParameters(String[] args, Properties properties) {
 		StringBuilder message = new StringBuilder();
 		if (args.length < 1)
 			message.append("At least one path is required\n");
@@ -57,11 +50,19 @@ public class App {
 			message.append("Invalid 'testFramework' parameter value\n");
 		}
 
-		for(String props : PropertiesUtils.databaseParams)
-			if(properties.getProperty(props).isEmpty())
+		for (String props : PropertiesUtils.databaseParams)
+			if (properties.getProperty(props).isEmpty())
 				message.append("Empty database parameter: " + props + "\n");
-		
-		return message.toString();
+
+		String validationError = message.toString();
+		if (!validationError.isEmpty()) {
+			validationError = "ERRORS:\n" + validationError;
+			System.out.println(StringUtils.generateHelpMassege(validationError, true));
+			printUsageHelp();
+		}
+
+		return validationError.isEmpty();
+
 	}
 
 	private static void printUsageHelp() {
@@ -75,7 +76,7 @@ public class App {
 		message.add("PATH_n- path to the files. It can be a directory or a path to a speciffic file");
 		message.add("    There is no maximum limit of provided paths, atleast one is required");
 		message.add("");
-		message.add("Parameters required in the '"+ PropertiesUtils.CONFIGURATION_FILE_NAME + "' file:");
+		message.add("Parameters required in the '" + PropertiesUtils.CONFIGURATION_FILE_NAME + "' file:");
 		message.add("- testFramework- test framework in which the source code tests are written.");
 		message.add("      Supported frameworks:");
 		for (TestFrameworkType type : TestFrameworkType.values()) {
@@ -83,8 +84,8 @@ public class App {
 		}
 		message.add("      NOTE: only supporter file types will be processed");
 		message.add("");
-		
-		for(String props : PropertiesUtils.databaseParams) {
+
+		for (String props : PropertiesUtils.databaseParams) {
 			message.add("- " + props);
 		}
 

@@ -42,7 +42,6 @@ public class CucumberExtractor implements IExtractor {
 				test.addLine(line);
 			}
 			
-			
 			if (line.trim().startsWith(testStarter)) {
 				isParsingTest = true;
 				test = new Test(this.extractScenarioName(testName));

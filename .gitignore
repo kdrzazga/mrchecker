@@ -47,6 +47,7 @@
 **/*.sqlite
 
 #kabanos related
+kabanos/generator/results
 kabanos/graphotron/webApp/node_modules/
 kabanosDatabase_inFile/
 

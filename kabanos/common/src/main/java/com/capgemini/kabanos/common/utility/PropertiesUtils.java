@@ -27,7 +27,9 @@ public class PropertiesUtils {
 
 	public static final String TEMPLATE_PATH = "templatePath";
 	public static final String TEMPLATE_FILE_NAME = "templateFileName";
-	public static final String[] templateParams = { TEMPLATE_PATH, TEMPLATE_FILE_NAME };
+	public static final String TEMPLATE_OUTPUT_FILE_PATH = "templateOutputFilePath";
+	public static final String TEMPLATE_EXTENSION = "templateExtension";
+	public static final String[] templateParams = { TEMPLATE_PATH, TEMPLATE_FILE_NAME, TEMPLATE_OUTPUT_FILE_PATH, TEMPLATE_EXTENSION };
 
 	public static final String JIRA_URL = "jiraUrl";
 	public static final String JIRA_USER = "jiraUser";
@@ -57,7 +59,7 @@ public class PropertiesUtils {
 				addEmptyParams(emptyProperties, gathererParams);
 				break;
 			case GENERATOR:
-				emptyProperties.append("#Configuration related th the template location\n");
+				emptyProperties.append("#Configuration related the template location and generator output\n");
 				addEmptyParams(emptyProperties, templateParams);
 
 				emptyProperties.append("#Configuration related to the JIRA application");
@@ -83,6 +85,13 @@ public class PropertiesUtils {
 		properties.append("\n");
 	}
 
+	/**
+	 * Function loads the applicaiton properties which should be located next to the executable *.jar file. 
+	 * If file is not found then it is automatically created by the application with empty values
+	 * 
+	 * @param type Type of the application eg. gathere, generator, graphotroe etc. for more info visit ApplicationConfigType enum
+	 * @return properties of the application eg. database location, template paths etc 
+	 */
 	public static Properties loadProperties(ApplicationConfigType type) {
 		try {
 			Properties defaultProps = new Properties();

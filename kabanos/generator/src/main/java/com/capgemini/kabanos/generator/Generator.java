@@ -5,6 +5,7 @@ import com.capgemini.kabanos.common.domain.Preposition;
 import com.capgemini.kabanos.common.domain.Step;
 import com.capgemini.kabanos.common.domain.Test;
 import com.capgemini.kabanos.common.enums.SourceType;
+import com.capgemini.kabanos.common.utility.FileUtils;
 import com.capgemini.kabanos.common.utility.PropertiesUtils;
 import com.capgemini.kabanos.common.utility.StringUtils;
 import com.capgemini.kabanos.database.DataBase;
@@ -13,7 +14,9 @@ import com.capgemini.kabanos.generator.mock.MockJiraTestGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -53,6 +56,18 @@ public class Generator {
 		return input;
 	}
 
+	/**
+	 * Function generates a template for the test assigned to the testId form the input. 
+	 * If the connected database contains any information about the implementation of
+	 * any of the steps assigned to the test then automatically that implementation is
+	 * concatenated right under the test step- implementation preposition
+	 * 
+	 * @param testId id of the test with steps in the given source tool eg. TASK_ID in JIRA, QC_ID in HP ALM tool
+	 * @param sourceType source from which the test information will be taken eg. JIRA, HP ALM
+	 * @return String representation of the generated template
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
 	public String generateTemplate(String testId, SourceType sourceType) throws IOException, TemplateException {
 		Test test = this.getTestFromSource(testId, sourceType);
 		this.addPrepositions(test);
@@ -110,5 +125,38 @@ public class Generator {
 		}
 
 		this.database.shutdown();
+	}
+
+	
+	/**
+	 * function saved the given Sting representing the file content under the given location
+	 * 
+	 * @param path location of the folder in which the generated template should be saved
+	 * @param fileName name of the file with extension
+	 * @param template String representing the generated template
+	 * @return true is save operation ended with success, false in ended with failure 
+	 * @throws IOException 
+	 */
+	public boolean saveTemplate(String path, String fileName, String template) throws IOException {
+		FileUtils.createDirectory(path);
+		return FileUtils.saveFile(path + "/" + fileName, template);
+	}
+
+	/**
+	 * function generates a file name matching the below format
+	 *   <br>
+	 *     template_20180313221933.txt
+	 * <br>
+	 * where:<br>
+	 *     template_ - constant value of the generated file name<br>
+	 *     20180313221933 - timestamp matching format yyyyMMddHHmmss<br>
+	 *     .txt - fileExtension from the input
+	 * 
+	 * @param fileExtension extension of the file eg. java, js, cpp etc.
+	 * @return
+	 */
+	public String generateFileName(String fileExtension) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		return "template_" + dateFormat.format(new Date()) + "." + fileExtension;
 	}
 }

@@ -14,6 +14,18 @@ import java.util.List;
 
 public class FileUtils {
 
+	public static boolean saveFile(String path, String content) throws IOException {
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
+		    writer.write(content);
+		    return true;
+		} 
+		catch (IOException ex) {
+			System.out.println(path);
+			System.out.println(ex);
+			throw ex;
+		}
+	}
+	
 	public static String[] readFile(String path) {
 		try {
 			return Files.readAllLines(Paths.get(path)).toArray(new String[0]);
@@ -46,16 +58,9 @@ public class FileUtils {
 	    
 		return result;
 	}
-	
-	public static boolean saveFile(String path, String content) throws IOException {
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
-		    writer.write(content);
-		    return true;
-		} 
-		catch (IOException ex) {
-			System.out.println(ex);
 
-			throw ex;
-		}
+	public static boolean createDirectory(String path) {
+		return new File(path).mkdirs();
+//		return false;
 	}
 }
