@@ -1,14 +1,14 @@
 [
   {
-    "firstName":"Alpha",
-    "lastName":546546564,
+    "firstName":"Johnny",
+    "lastName":"Bravo",
     "maritalStatus":"SINGLE",
     "hobby":"READING",
     "country":"Poland",
-    "birthDate":"8-10-1987",
+    "birthDate":"1-1-1982",
     "phoneNumber":"0025444666555",
     "username": "Apassdlfkdf14",
-    "email":"johntravolta14@icloud.com",
+    "email":"johnnyBravo@icloud.com",
     "yourProfilePhotoPath":"com/example/demo/cucumber/features/registration/graph/ok-graph.gif",
     "aboutYourself":"It's me.",
     "password":"zaQW@#ER34we_2",

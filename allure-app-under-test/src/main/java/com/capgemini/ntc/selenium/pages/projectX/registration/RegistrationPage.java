@@ -1,9 +1,11 @@
 package com.capgemini.ntc.selenium.pages.projectX.registration;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.capgemini.ntc.selenium.core.BasePage;
 import com.capgemini.ntc.selenium.core.exceptions.BFElementNotFoundException;
@@ -164,23 +166,28 @@ public class RegistrationPage extends BasePage {
 		}
 	}
 	
+	@SuppressWarnings({ "unused", "deprecation" })
 	public void setHobby(Hobby hobby) {
-		
+		if (false) {
+			
+			// HINT: Selenium out of the box library
+			List<WebElement> checkboxesList = getDriver().findElements(selectorHobby);
+			WebElement currentElement;
+			for (int i = 0; i < checkboxesList.size(); i++) {
+				currentElement = checkboxesList.get(i);
+				if (currentElement.getAttribute("value")
+								.equals(hobby.toString()) && currentElement.isSelected() != true) {
+					currentElement.click();
+				}
+			}
+		}
 		/*
-		 * // HINT: Selenium out of the box library
-		 * List<WebElement> checkboxesList = getDriver()
-		 * .findElements(selectorHobby);
-		 * WebElement currentElement;
-		 * for (int i = 0; i < checkboxesList.size(); i++) {
-		 * currentElement = checkboxesList.get(i);
-		 * if (currentElement.getAttribute("value")
-		 * .equals(hobby.toString()) && currentElement.isSelected() != true) {
-		 * currentElement.click();
-		 * }
-		 * }
+		 * COMPARE
+		 * TO
+		 * BETTER STRUCTURE
 		 */
 		
-		// HINT: E2E enhaced Selenium module experience
+		// HINT: E2E enhanced Selenium module experience
 		getDriver().elementCheckbox(selectorHobby)
 						.setCheckBoxByValue(hobby.toString());
 	}

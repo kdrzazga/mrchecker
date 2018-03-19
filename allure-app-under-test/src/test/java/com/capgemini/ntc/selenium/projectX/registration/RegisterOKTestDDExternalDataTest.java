@@ -7,7 +7,6 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsSelenium;
-import com.capgemini.ntc.selenium.pages.environment.PageTitlesEnum;
 import com.capgemini.ntc.selenium.pages.projectX.registration.RegistrationPage;
 import com.capgemini.ntc.selenium.projectX.registration.utils.DataProviderExternalJsonFile;
 import com.capgemini.ntc.selenium.projectX.registration.utils.FormDataContainer;
@@ -35,9 +34,6 @@ public class RegisterOKTestDDExternalDataTest extends BaseTest {
 	@Test
 	@Parameters(source = DataProviderExternalJsonFile.class)
 	public void registrationTest(FormDataContainer data) throws InterruptedException {
-		assertTrue("Site title: " + registrationPage.getActualPageTitle(),
-				registrationPage.getActualPageTitle()
-						.equals(PageTitlesEnum.REGISTRATION.toString()));
 		
 		registrationPage.setFirstName(data.getFirstName());
 		registrationPage.setLastName(data.getLastName());

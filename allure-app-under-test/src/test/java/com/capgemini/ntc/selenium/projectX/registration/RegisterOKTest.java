@@ -8,7 +8,6 @@ import org.junit.experimental.categories.Category;
 import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsFailed;
 import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsSelenium;
 import com.capgemini.ntc.selenium.core.utils.TestUtils;
-import com.capgemini.ntc.selenium.pages.environment.PageTitlesEnum;
 import com.capgemini.ntc.selenium.pages.projectX.registration.Hobby;
 import com.capgemini.ntc.selenium.pages.projectX.registration.MaritalStatus;
 import com.capgemini.ntc.selenium.pages.projectX.registration.RegistrationPage;
@@ -44,9 +43,6 @@ public class RegisterOKTest extends BaseTest {
 	
 	@Test
 	public void Register_OK() {
-		assertTrue("Site title: " + registrationPage.getActualPageTitle(),
-				registrationPage.getActualPageTitle()
-						.equals(PageTitlesEnum.REGISTRATION.toString()));
 		
 		registrationPage.setFirstName(firstName);
 		registrationPage.setLastName(lastName);
