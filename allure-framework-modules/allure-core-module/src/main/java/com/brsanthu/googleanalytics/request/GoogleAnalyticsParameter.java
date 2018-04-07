@@ -149,35 +149,35 @@ public enum GoogleAnalyticsParameter {
 	private String[] supportedHitTypes = null;
 	private int maxLength = 0;
 	
-	private GoogleAnalyticsParameter(String name) {
+	GoogleAnalyticsParameter(String name) {
 		this(name, false);
 	}
 	
-	private GoogleAnalyticsParameter(String name, int maxLength) {
+	GoogleAnalyticsParameter(String name, int maxLength) {
 		this(name, false, null, null, maxLength);
 	}
 	
-	private GoogleAnalyticsParameter(String name, boolean required) {
+	GoogleAnalyticsParameter(String name, boolean required) {
 		this(name, required, TYPE_TEXT, null, 0);
 	}
 	
-	private GoogleAnalyticsParameter(String name, String type) {
+	GoogleAnalyticsParameter(String name, String type) {
 		this(name, false, type, null, 0);
 	}
 	
-	private GoogleAnalyticsParameter(String name, String[] supportedHitTypes) {
+	GoogleAnalyticsParameter(String name, String[] supportedHitTypes) {
 		this(name, false, TYPE_TEXT, supportedHitTypes, 0);
 	}
 	
-	private GoogleAnalyticsParameter(String name, String[] supportedHitTypes, int maxLength) {
+	GoogleAnalyticsParameter(String name, String[] supportedHitTypes, int maxLength) {
 		this(name, false, TYPE_TEXT, supportedHitTypes, maxLength);
 	}
 	
-	private GoogleAnalyticsParameter(String name, boolean required, String type, String[] supportedHitTypes) {
+	GoogleAnalyticsParameter(String name, boolean required, String type, String[] supportedHitTypes) {
 		this(name, required, type, supportedHitTypes, 0);
 	}
 	
-	private GoogleAnalyticsParameter(String name, boolean required, String type, String[] supportedHitTypes, int maxLength) {
+	GoogleAnalyticsParameter(String name, boolean required, String type, String[] supportedHitTypes, int maxLength) {
 		this.parameterName = name;
 		this.required = required;
 		if (type == null) {

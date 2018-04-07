@@ -26,7 +26,7 @@ public enum ColorsEnum {
 	private int b;
 	private int alpha;
 	
-	private ColorsEnum(int r, int g, int b, int alpha) {
+	ColorsEnum(int r, int g, int b, int alpha) {
 		this.r = r;
 		this.g = g;
 		this.b = b;

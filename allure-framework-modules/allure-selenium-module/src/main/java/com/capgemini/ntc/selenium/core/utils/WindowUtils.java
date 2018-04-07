@@ -45,7 +45,7 @@ public class WindowUtils {
 			String currentURL = BasePage.getDriver()
 					.getCurrentUrl();
 			boolean isSwitchedToGivenURL = currentURL.contains(url);
-			if (!(isSwitchedToGivenURL ^ switchToGivenURL)) {
+			if (isSwitchedToGivenURL == switchToGivenURL) {
 				return;
 			}
 		}
@@ -68,10 +68,9 @@ public class WindowUtils {
 			String currentTitle = BasePage.getDriver()
 					.getTitle();
 			boolean isSwitchedToGivenURL = currentTitle.contains(title);
-			if (!(isSwitchedToGivenURL ^ switchToGiven)) {
+			if (isSwitchedToGivenURL == switchToGiven) {
 				BFLogger.logInfo("Switching to window title:" + currentTitle);
-				;
-				return;
+                return;
 			}
 		}
 	}

@@ -19,11 +19,8 @@ public class ColorsUtils {
 	 */
 	public static boolean isElementTextInGivenColor(WebElement element, ColorsEnum color) {
 		String elementColor = element.getCssValue("color");
-		if (elementColor == null || !elementColor.contains(color.toString())) {
-			return false;
-		}
-		return true;
-	}
+        return !(elementColor == null || !elementColor.contains(color.toString()));
+    }
 	
 	/**
 	 * @param element

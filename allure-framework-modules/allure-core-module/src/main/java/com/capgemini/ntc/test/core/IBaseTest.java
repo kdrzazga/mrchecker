@@ -2,7 +2,7 @@ package com.capgemini.ntc.test.core;
 
 public interface IBaseTest {
 	
-	public void tearDown();
+	void tearDown();
 	
-	public void setUp();
+	void setUp();
 }

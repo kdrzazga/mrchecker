@@ -4,8 +4,10 @@ import com.capgemini.ntc.test.core.base.runtime.RuntimeParametersI;
 import com.capgemini.ntc.test.core.logger.BFLogger;
 
 /**
- * This class stores various system properties These parameters are accessible while test case executes Example :
- * PARAM_3("param_3", "1410") IS: mvn test -Dparam_3=1525 -Dtest=MyTestClass
+ * This class stores various system properties
+ * These parameters are accessible while test case executes
+ * Example : PARAM_3("param_3", "1410")
+ * IS: mvn test -Dparam_3=1525 -Dtest=MyTestClass
  * 
  * @author LUSTEFAN
  */
@@ -20,7 +22,7 @@ public enum RuntimeParameters implements RuntimeParametersI {
 	private String paramValue;
 	private String defaultValue;
 	
-	private RuntimeParameters(String paramName, String defaultValue) {
+	RuntimeParameters(String paramName, String defaultValue) {
 		this.paramName = paramName;
 		this.defaultValue = defaultValue;
 		setValue();
@@ -46,9 +48,8 @@ public enum RuntimeParameters implements RuntimeParametersI {
 		
 		String paramValue = System.getProperty(this.paramName);
 		paramValue = isSystemParameterEmpty(paramValue) ? this.defaultValue : paramValue.toLowerCase();
-		;
-		
-		switch (this.name()) {
+
+        switch (this.name()) {
 		case "PARAM_1":
 			if (paramValue.equals("Bye")) {
 				paramValue = "Hi";

@@ -8,11 +8,11 @@ public interface RuntimeParametersI {
 	/**
 	 * @return value of parameter
 	 */
-	public String getValue();
+    String getValue();
 	
 	/**
 	 * Read one more time Runtime parameters
 	 */
-	public void refreshParameterValue();
+    void refreshParameterValue();
 	
 }

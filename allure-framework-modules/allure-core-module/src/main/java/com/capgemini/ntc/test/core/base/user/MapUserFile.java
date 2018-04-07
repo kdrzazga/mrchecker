@@ -89,8 +89,7 @@ public class MapUserFile {
 		if (from.isNull(key)) {
 			return "";
 		}
-		;
-		return (String) from.get(key);
+        return (String) from.get(key);
 	}
 	
 	private static boolean isNull(JSONObject jsonObj, UserJsonKey key) {

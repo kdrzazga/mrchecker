@@ -13,7 +13,7 @@ public enum RuntimeParametersCore implements RuntimeParametersI {
 	private String paramValue;
 	private String defaultValue;
 	
-	private RuntimeParametersCore(String paramName, String defaultValue) {
+	RuntimeParametersCore(String paramName, String defaultValue) {
 		this.paramName = paramName;
 		this.defaultValue = defaultValue;
 		setValue();

@@ -60,11 +60,9 @@ public class PropertiesSettingsModule extends AbstractModule {
 	
 	private boolean exists(String path) {
 		File f = new File(path);
-		if (f.exists())
-			return true;
-		
-		return false;
-	}
+        return f.exists();
+
+    }
 	
 	private Properties loadProperties(String path) {
 		Properties properties = new Properties();

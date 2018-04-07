@@ -1,15 +1,15 @@
 package com.capgemini.ntc.test.core;
 
 public interface ITestObserver {
-	public void onTestSuccess();
+	void onTestSuccess();
 	
-	public void onTestFailure();
+	void onTestFailure();
 	
-	public void onTestFinish();
+	void onTestFinish();
 	
-	public void onTestClassFinish();
+	void onTestClassFinish();
 	
-	public void addObserver();
+	void addObserver();
 	
-	public ModuleType getModuleType();
+	ModuleType getModuleType();
 }

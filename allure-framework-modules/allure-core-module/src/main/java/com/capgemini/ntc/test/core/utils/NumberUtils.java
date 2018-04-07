@@ -119,11 +119,8 @@ public class NumberUtils {
 		final BigDecimal acceptedDifference = BigDecimal.ONE;
 		BigDecimal absDifference = oneValue.subtract(secondValue)
 				.abs();
-		if (absDifference.compareTo(acceptedDifference) <= 0) {
-			return false;
-		}
-		return true;
-	}
+        return absDifference.compareTo(acceptedDifference) > 0;
+    }
 	
 	/**
 	 * This function returns a pseudorandom, uniformly distributed int value between 0 (inclusive) and the specified
@@ -206,11 +203,8 @@ public class NumberUtils {
 		if (f1.compareTo(f2) == 0) {
 			return false;
 		}
-		if (f1.subtract(f2)
-				.abs()
-				.compareTo(delta) <= 0) {
-			return false;
-		}
-		return true;
-	}
+        return f1.subtract(f2)
+                .abs()
+                .compareTo(delta) > 0;
+    }
 }

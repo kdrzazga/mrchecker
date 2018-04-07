@@ -70,5 +70,5 @@ public enum UserAccountPredicate {
 			}
 		};
 		return PredicateUtils.allPredicate(new Predicate[] { userDataInstancePredicate, predicate });
-	};
+	}
 }

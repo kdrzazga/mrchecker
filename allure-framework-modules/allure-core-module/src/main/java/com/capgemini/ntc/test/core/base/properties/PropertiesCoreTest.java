@@ -5,17 +5,33 @@ import com.google.inject.name.Named;
 
 public class PropertiesCoreTest {
 	
-	private Boolean coreIsAnalyticsEnabled = true; // default value
+	private boolean	coreIsAnalyticsEnabled	= true;
+	private boolean	coreIsEncryptionEnabled	= false;
 	
 	@Inject(optional = true)
 	private void setIsAnalyticsEnabled(@Named("core.isAnalyticsEnabled") String status) {
-		this.coreIsAnalyticsEnabled = status.toLowerCase()
-				.equals("false") ? false : true;
+<<<<<<< HEAD
+		this.coreIsAnalyticsEnabled = !status.toLowerCase()
+                .equals("false");
 		
+=======
+		this.coreIsAnalyticsEnabled = status.toLowerCase()
+		        .equals("false") ? false : true;
+>>>>>>> remotes/origin/develop
 	}
 	
-	public Boolean isAnalyticsEnabled() {
+	@Inject(optional = true)
+	private void setIsEncryptionEnabled(@Named("core.isEncryptionEnabled") String status) {
+		this.coreIsEncryptionEnabled = status.toLowerCase()
+		        .equals("true") ? true : false;
+	}
+	
+	public boolean isAnalyticsEnabled() {
 		return this.coreIsAnalyticsEnabled;
+	}
+	
+	public boolean isEncryptionEnabled() {
+		return coreIsEncryptionEnabled;
 	}
 	
 }

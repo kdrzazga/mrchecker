@@ -24,14 +24,14 @@ public class EnvironmentLevel extends Level {
 				.equals("ENVIRONMENT")) {
 			return ENVIRONMENT;
 		}
-		return (Level) toLevel(logArgument);
+		return toLevel(logArgument);
 	}
 	
 	public static Level toLevel(int val) {
 		if (val == ENVIRONMENT_INT) {
 			return ENVIRONMENT;
 		}
-		return (Level) toLevel(val, Level.DEBUG);
+		return toLevel(val, Level.DEBUG);
 	}
 	
 	public static Level toLevel(int val, Level defaultLevel) {

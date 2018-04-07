@@ -17,7 +17,7 @@ import org.openqa.selenium.WebElement;
  */
 public class Utility {
 	
-	static public enum SortOrder {
+	public enum SortOrder {
 		ASCENDING(1), DESCENDING(-1);
 		int param;
 		

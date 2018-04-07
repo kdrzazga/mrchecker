@@ -8,6 +8,6 @@ import com.brsanthu.googleanalytics.request.DefaultRequest;
  */
 public interface RequestParameterDiscoverer {
 	
-	public DefaultRequest discoverParameters(GoogleAnalyticsConfig config, DefaultRequest request);
+	DefaultRequest discoverParameters(GoogleAnalyticsConfig config, DefaultRequest request);
 	
 }

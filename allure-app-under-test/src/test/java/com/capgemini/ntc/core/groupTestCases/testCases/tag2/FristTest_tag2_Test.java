@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestSlow;
+import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsSlow;
 import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsIE;
 import com.capgemini.ntc.core.groupTestCases.testSuites.tags.TestsTag2;
 import com.capgemini.ntc.selenium.pages.projectX.registration.RegistryPage;
@@ -18,7 +18,7 @@ import com.capgemini.ntc.test.core.logger.BFLogger;
 import ru.yandex.qatools.allure.annotations.Features;
 
 @Features("TAG2")
-@Category({ TestsTag2.class, TestSlow.class, TestsIE.class })
+@Category({ TestsTag2.class, TestsSlow.class, TestsIE.class })
 public class FristTest_tag2_Test extends BaseTest {
 	
 	private RegistryPage registryPage;
@@ -38,7 +38,7 @@ public class FristTest_tag2_Test extends BaseTest {
 	public void QCID_StayOnResistryPage_Tag2_First() throws InterruptedException {
 		
 		BFLogger.logInfo(
-				"[Step 2] As a standard user I click Submit button,  So that I will stay on Registry page");
+						"[Step 2] As a standard user I click Submit button,  So that I will stay on Registry page");
 		registryPage.clickSubmit();
 		assertThat(true, is(registryPage.isLoaded()));
 		

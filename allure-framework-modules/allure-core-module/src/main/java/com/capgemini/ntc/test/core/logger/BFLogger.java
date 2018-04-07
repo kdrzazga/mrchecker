@@ -7,9 +7,9 @@ public class BFLogger {
 		@Override
 		protected BFLoggerInstance initialValue() {
 			return new BFLoggerInstance();
-		};
-		
-	};
+		}
+
+    };
 	
 	public static BFLoggerInstance getLog() {
 		return loggers.get();

@@ -27,22 +27,22 @@ public enum PageSubURLsEnum implements SubUrl {
 	REGISTRATION("registration/"),
 	FRAMEANDWINDOWS("frames-and-windows"),
 	MAIN_PAGE(""),
-	FAQ("content/apps/static/faqpopup/index.html"),
 	AUTOMATION_PRACTICE_FORM("automation-practice-form"),
 	TABS("tabs/"),
 	TOOLTIP("tooltip/"),
-	MENU("menu/");
+	MENU("menu/"),
+	SLIDER("slider/");
 	
 	/*
 	 * Sub urls are used as real locations in Bank test environment
 	 */
 	private String subURL;
 	
-	private PageSubURLsEnum(String subURL) {
+	PageSubURLsEnum(String subURL) {
 		this.subURL = subURL;
-	};
+	}
 	
-	private PageSubURLsEnum() {
+	PageSubURLsEnum() {
 		
 	}
 	

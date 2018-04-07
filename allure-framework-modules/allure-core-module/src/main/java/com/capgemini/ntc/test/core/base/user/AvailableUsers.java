@@ -43,8 +43,7 @@ public class AvailableUsers {
 					.evaluate(accountData)) {
 				return accountData;
 			}
-			;
-		}
+        }
 		throw new UserProviderException("Unable to find account with properties '" + accountPredicate.toString() + "' in '" + currentUserData.toString() + "' account.");
 	}
 	

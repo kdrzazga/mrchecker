@@ -143,11 +143,8 @@ public class TimeUtills {
 				.replace("\"", "");
 		BFLogger.logInfo("isThisIsTradingHoursinNY - result: " + result);
 		iNewWebDriver.get(orginalUrl);
-		if (result.equals("N")) {
-			return false;
-		}
-		return true;
-	}
+        return !result.equals("N");
+    }
 	
 	/**
 	 * Function waits specified time
@@ -301,10 +298,8 @@ public class TimeUtills {
 		Calendar today = Calendar.getInstance();
 		if (today.get(Calendar.MONTH) < Calendar.APRIL)
 			return true;
-		if (today.get(Calendar.MONTH) == Calendar.APRIL && today.get(Calendar.DAY_OF_MONTH) < 15)
-			return true;
-		return false;
-	}
+        return today.get(Calendar.MONTH) == Calendar.APRIL && today.get(Calendar.DAY_OF_MONTH) < 15;
+    }
 	
 	/**
 	 * @author

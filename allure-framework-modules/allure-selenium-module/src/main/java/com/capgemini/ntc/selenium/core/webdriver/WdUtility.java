@@ -110,7 +110,7 @@ public class WdUtility {
 	 * @return true if first element is on top of other; false otherwise
 	 */
 	public static boolean isOverElement(WebElement firstElement, WebElement secondElement) {
-		return WdUtility.compareElementsInZAxis(firstElement, secondElement) > 0 ? true : false;
+		return WdUtility.compareElementsInZAxis(firstElement, secondElement) > 0;
 	}
 	
 	/**

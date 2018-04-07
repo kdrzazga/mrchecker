@@ -6,7 +6,7 @@ public enum EdgesEnum {
 	
 	private String value;
 	
-	private EdgesEnum(String value) {
+	EdgesEnum(String value) {
 		this.value = value;
 	}
 	

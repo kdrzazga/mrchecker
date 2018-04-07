@@ -17,7 +17,7 @@ public enum ResolutionEnum implements IResolutionList {
 	private int width;
 	private int height;
 	
-	private ResolutionEnum(int width, int height) {
+	ResolutionEnum(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}

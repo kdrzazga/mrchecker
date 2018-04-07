@@ -105,8 +105,7 @@ public class UserData {
 					.evaluate(accountData)) {
 				return accountData;
 			}
-			;
-		}
+        }
 		throw new UserProviderException("Unable to find account with properties '" + accountPredicate.toString() + "' in '" + this + "' account.");
 	}
 	
