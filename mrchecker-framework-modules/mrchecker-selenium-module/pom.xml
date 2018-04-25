@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>allure-test-framework</artifactId>
+        <artifactId>mrchecker-test-framework</artifactId>
         <groupId>com.capgemini.ntc</groupId>
         <version>2.1.0</version>
     </parent>
@@ -65,7 +65,7 @@ Based on Selenium 3.8.1</description>
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
 
 
-        <allure-core-module.version>4.12.0.6</allure-core-module.version>
+        <mrchecker-core-module.version>4.12.0.6</mrchecker-core-module.version>
 
         <!-- Selenium settings -->
         <selenium.version>3.8.1</selenium.version>
@@ -97,7 +97,7 @@ Based on Selenium 3.8.1</description>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mrchecker-core-module</artifactId>
-            <version>${allure-core-module.version}</version>
+            <version>${mrchecker-core-module.version}</version>
         </dependency>
 
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>allure-test-framework</artifactId>
+        <artifactId>mrchecker-test-framework</artifactId>
         <groupId>com.capgemini.ntc</groupId>
         <version>2.1.0</version>
     </parent>
@@ -61,7 +61,7 @@
     <properties>
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
 
-        <allure-core-module.version>4.12.0.6</allure-core-module.version>
+        <mrchecker-core-module.version>4.12.0.6</mrchecker-core-module.version>
         <jpa.version>1.0</jpa.version>
 
         <!-- Lib/package version settings -->
@@ -71,11 +71,11 @@
 
     <dependencies>
 
-        <!-- Dependency to other Allure Test Framework modules -->
+        <!-- Dependency to other MrChecker Test Framework modules -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mrchecker-core-module</artifactId>
-            <version>${allure-core-module.version}</version>
+            <version>${mrchecker-core-module.version}</version>
         </dependency>
 
         <!-- JPA dependencies -->

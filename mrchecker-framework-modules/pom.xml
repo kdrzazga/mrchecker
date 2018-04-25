@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.capgemini.ntc</groupId>
-    <artifactId>allure-test-framework</artifactId>
+    <artifactId>mrchecker-test-framework</artifactId>
     <version>2.1.0</version>
     <name>MrCheckerTestFramework</name>
     <description>MrChecker Test Framework is an automated testing framework for functional testing of web applications, native mobile apps, webservices and database.</description>

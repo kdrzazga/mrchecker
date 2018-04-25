@@ -46,7 +46,7 @@
     <properties>
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
 
-        <allure-core-module.version>4.12.0.6</allure-core-module.version>
+        <mrchecker-core-module.version>4.12.0.6</mrchecker-core-module.version>
 
         <!-- Lib/package version settings -->
         <!-- <package.version>0.0.0</selenium.version> -->
@@ -58,8 +58,8 @@
         <!-- Dependency to other MrChecker Test Framework modules -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>allure-core-module</artifactId>
-            <version>${allure-core-module.version}</version>
+            <artifactId>mrchecker-core-module</artifactId>
+            <version>${mrchecker-core-module.version}</version>
         </dependency>
 
 		
