@@ -25,7 +25,7 @@ node(){
 
 void stagePrepareEnv(){
     stage('Prepare environment'){
-        cleanWorkspace();
+        //cleanWorkspace();
         setWorkspace();
 	}
 }
