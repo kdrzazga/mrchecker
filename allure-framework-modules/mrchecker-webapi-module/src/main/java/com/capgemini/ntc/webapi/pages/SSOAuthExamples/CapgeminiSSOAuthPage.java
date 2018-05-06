@@ -7,8 +7,8 @@ import io.restassured.response.Response;
 
 public class CapgeminiSSOAuthPage extends BasePageWebAPI {
 	
-	private final static String	HOSTNAME	= "http://nsc.capgemini.com";
-	private final static String	PATH		= "/deliverykit/SSC/Podrecznik-Pracownika.aspx";
+	private final static String	HOSTNAME	= "http://capgemini.com";
+	private final static String	PATH		= "";
 	private final static String	ENDPOINT	= HOSTNAME + PATH;
 	
 	public Response sendGETQuery() {
