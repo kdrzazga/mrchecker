@@ -1,21 +1,22 @@
 package com.capgemini.mrchecker.database;
 
+import com.capgemini.mrchecker.test.core.BaseTest;
 import org.junit.Test;
 
-public class BaseDatabaseTest {
+public class BaseDatabaseTest extends BaseTest {
+
+	@Override public void setUp() {
+
+	}
+
+	@Override public void tearDown() {
+
+	}
 
 	@Test
-	public void test() {
-		MyDatabase myDatabase = new MyDatabase();
+	public void propertyReadingTest() {
 
-		myDatabase.myMethod();
 	}
 
-	private static class MyDatabase extends BaseDatabaseTest {
-
-		public String myMethod() {
-			return "Welcome";
-		}
-	}
 
 }

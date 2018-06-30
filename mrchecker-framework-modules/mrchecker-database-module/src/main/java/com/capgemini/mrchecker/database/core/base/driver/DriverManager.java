@@ -1,4 +1,6 @@
-package com.capgemini.mrchecker.database.core;
+package com.capgemini.mrchecker.database.core.base.driver;
+
+import com.capgemini.mrchecker.database.core.base.properties.PropertiesManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +15,7 @@ public class DriverManager {
 	}
 
 	private static EntityManagerFactory getEntityManagerFactory(String dbPrefix) {
-		return emf != null ? emf : Persistence.createEntityManagerFactory(dbPrefix);
+		return emf != null ? emf : Persistence.createEntityManagerFactory(dbPrefix, PropertiesManager.readProperties());
 	}
 
 }
