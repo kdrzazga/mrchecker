@@ -1,5 +1,13 @@
 package com.capgemini.mrchecker.webapi.pages.httbin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.codec.binary.Base64;
+
 import com.capgemini.mrchecker.webapi.core.BasePageWebAPI;
 import com.capgemini.mrchecker.webapi.core.base.driver.DriverManager;
 import com.capgemini.mrchecker.webapi.pages.environment.GetEnvironmentParam;
@@ -45,5 +53,36 @@ public class GetImagePage extends BasePageWebAPI {
 	@Override
 	public String getEndpoint() {
 		return ENDPOINT;
+	}
+	
+	public String encodeFileToBase64(File file) {
+		String encodedfile = null;
+		try {
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+			fileInputStreamReader.read(bytes);
+			encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
+			fileInputStreamReader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return encodedfile;
+	}
+	
+	public String encodeResponseToBase64(Response response) {
+		String encodedResponse = null;
+		
+		try {
+			byte[] bytes = response.body()
+					.asByteArray();
+			encodedResponse = new String(Base64.encodeBase64(bytes), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return encodedResponse;
 	}
 }
