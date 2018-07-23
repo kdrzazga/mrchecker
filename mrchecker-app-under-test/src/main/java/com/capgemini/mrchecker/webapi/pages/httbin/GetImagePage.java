@@ -5,8 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
-import org.apache.commons.codec.binary.Base64;
+import java.util.Base64;
 
 import com.capgemini.mrchecker.webapi.core.BasePageWebAPI;
 import com.capgemini.mrchecker.webapi.core.base.driver.DriverManager;
@@ -61,7 +60,8 @@ public class GetImagePage extends BasePageWebAPI {
 			FileInputStream fileInputStreamReader = new FileInputStream(file);
 			byte[] bytes = new byte[(int) file.length()];
 			fileInputStreamReader.read(bytes);
-			encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
+			encodedfile = new String(Base64.getEncoder()
+					.encode(bytes), "UTF-8");
 			fileInputStreamReader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -78,7 +78,8 @@ public class GetImagePage extends BasePageWebAPI {
 		try {
 			byte[] bytes = response.body()
 					.asByteArray();
-			encodedResponse = new String(Base64.encodeBase64(bytes), "UTF-8");
+			encodedResponse = new String(Base64.getEncoder()
+					.encode(bytes), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
