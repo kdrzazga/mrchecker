@@ -69,9 +69,6 @@ public class REST_FarenheitToCelsiusMethod_Test extends BaseTest {
 		Response response = given()
 				.with()
 				.header("Content-Type", ContentType.JSON.toString())
-				.log()
-				.all()
-				.when()
 				.get(endpointBaseUri + "/some/thing")
 				.thenReturn();
 		

@@ -12,10 +12,15 @@ public enum ResolutionEnum implements IResolutionList {
 	w1366(1366, 768),
 	w1600(1600, 1200),
 	w1800(1800, 1440),
-	w1920(1920, 1080);
+	w1920(1920, 1080),
+	iPhoneX(375, 812),
+	SamsungS9(360, 740),
+	Nexus9(1024, 768),
+	AndroidOne(320, 569),
+	;
 	
-	private int width;
-	private int height;
+	private int	width;
+	private int	height;
 	
 	private ResolutionEnum(int width, int height) {
 		this.width = width;

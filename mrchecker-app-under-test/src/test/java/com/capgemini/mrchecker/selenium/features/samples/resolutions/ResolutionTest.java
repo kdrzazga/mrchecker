@@ -28,9 +28,9 @@ public class ResolutionTest extends BaseTest {
 	
 	private static Object[] getResolutions() {
 		return new Object[] {
-						ResolutionEnum.w768,
-						ResolutionEnum.w960,
-						ResolutionEnum.w1920 };
+						ResolutionEnum.iPhoneX,
+						ResolutionEnum.Nexus9,
+						ResolutionEnum.AndroidOne };
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class ResolutionTest extends BaseTest {
 		ResolutionUtils.setResolution(BasePage.getDriver(), resolutionEnum);
 		
 		assertThat(true, is(registryPage.isButtonSubmitDisplayed()));
-		TimeUnit.SECONDS.sleep(1); // This is for demo. Do not do it at home
+		TimeUnit.SECONDS.sleep(5); // This is for demo. Do not do it at home
 		
 	}
 	
