@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.capgemini.mrchecker.security.EnvironmentParam;
@@ -44,32 +45,37 @@ public class SessionManager extends BasePage implements ISessionManager {
 	 * Authenticates a single user session and stores the session related identifiers (headers) localy.
 	 * 
 	 * @param session
-	 *          Session name.
+	 *            Session name.
 	 * @param user
-	 *          User name.
+	 *            User name.
 	 * @param password
-	 *          User password.
+	 *            User password.
 	 */
 	private void authenticateSession(SessionEnum session, EnvironmentParam user, EnvironmentParam password) {
 		RestAssured.defaultParser = Parser.TEXT;
 		
 		JSONObject request = new JSONObject();
-		request.put("username", user);
-		request.put("password", password);
+		try {
+			request.put("username", user);
+			request.put("password", password);
+		} catch (JSONException e) {
+			// TASK Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		RequestSpecification rs = new RequestSpecBuilder()
-		        .setBody(request.toString())
-		        .setBaseUri(EnvironmentParam.SECURITY_SERVER_ORIGIN.getValue())
-		        .setBasePath(SubUrlEnum.LOGIN.getValue())
-		        .build();
+				.setBody(request.toString())
+				.setBaseUri(EnvironmentParam.SECURITY_SERVER_ORIGIN.getValue())
+				.setBasePath(SubUrlEnum.LOGIN.getValue())
+				.build();
 		Headers headers = given(rs)
-		        .when()
-		        .post()
-		        .getHeaders();
+				.when()
+				.post()
+				.getHeaders();
 		
 		if (!headers.hasHeaderWithName(AUTHORIZATION_HEADER)) {
 			throw new RuntimeException("No authorization header found. "
-			        + "Expected a header 'Authorization' holding a Bearer token.");
+					+ "Expected a header 'Authorization' holding a Bearer token.");
 		}
 		
 		Header authHeader = headers.get(AUTHORIZATION_HEADER);
@@ -90,7 +96,7 @@ public class SessionManager extends BasePage implements ISessionManager {
 		
 		RequestSpecBuilder result = new RequestSpecBuilder();
 		for (Header header : authData.get(session)
-		        .asList()) {
+				.asList()) {
 			result.addHeader(header.getName(), header.getValue());
 		}
 		return result;
