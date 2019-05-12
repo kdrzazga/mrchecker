@@ -3,7 +3,7 @@ node(){
 	//Set Jenkins run parameters
 	properties([
 		parameters([
-			string(defaultValue: 'mrchecker-framework-modules/', description: 'Execute job for given Module. Example mrchecker-framework-modules/ ', name: 'APP_WORKSPACE'),
+			string(defaultValue: 'mrchecker-framework-modules/mrchecker-database-module', description: 'Execute job for given Module. Example mrchecker-framework-modules/ ', name: 'APP_WORKSPACE'),
 			string(defaultValue: 'develop', description: 'Execute job on given branch', name: 'WORKING_BRANCH'), 
 			booleanParam(defaultValue: false, description: '''Should given job be deployed to Remote Nexus repository ? 
 #1. Go to Nexus staging repo 
