@@ -84,4 +84,22 @@ public class FormAuthenticationPage extends BasePage {
 	public void clickLogoutButton() {
 		new Button(selectorLogoutButton).click();
 	}
+
+	/**
+	 * Set username by {@code sendKeys()}
+	 * @param username
+	 */
+	public void typeUsernameByKeyboard(String username){
+		getDriver().findElementDynamic(selectorInputUsername).sendKeys(username);
+	}
+
+	/**
+	 * Set password by {@code sendKeys()}
+	 * @param password
+	 */
+	public void typePasswordByKeyboard(String password){
+		getDriver().findElementDynamic(selectorInputUserPassword).sendKeys(password);
+	}
+
+
 }
