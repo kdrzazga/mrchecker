@@ -69,6 +69,7 @@
         <mrchecker-selenium-module.version>3.8.2.1</mrchecker-selenium-module.version>
         <mrchecker-security-module.version>1.2.0</mrchecker-security-module.version>
         <mrchecker-webapi-module.version>1.2.0</mrchecker-webapi-module.version>
+        <mrchecker-mobile-module.version>7.2.0.1-SNAPSHOT</mrchecker-mobile-module.version>
 
 
         <!-- Java settings -->
@@ -143,6 +144,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>mrchecker-webapi-module</artifactId>
             <version>${mrchecker-webapi-module.version}</version>
+        </dependency>
+        
+        <!-- Mobile module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-mobile-module</artifactId>
+            <version>${mrchecker-mobile-module.version}</version>
         </dependency>
 
 
