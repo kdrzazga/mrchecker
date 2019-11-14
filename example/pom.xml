@@ -117,42 +117,50 @@
 
     <dependencies>
 
-        <!-- Dependency to other MrChecker Test Framework modules -->
-        <!-- Test core module -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mrchecker-core-module</artifactId>
-            <version>${mrchecker-core-module.version}</version>
-        </dependency>
-
-        <!-- Selenium module -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mrchecker-selenium-module</artifactId>
-            <version>${mrchecker-selenium-module.version}</version>
-        </dependency>
-
-        <!-- Security module -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mrchecker-security-module</artifactId>
-            <version>${mrchecker-security-module.version}</version>
-        </dependency>
-
-        <!-- WebAPI + Service Virtualization module -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mrchecker-webapi-module</artifactId>
-            <version>${mrchecker-webapi-module.version}</version>
-        </dependency>
         
-        <!-- Mobile module -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mrchecker-mobile-module</artifactId>
-            <version>${mrchecker-mobile-module.version}</version>
+
+<dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
         </dependency>
 
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>3.141.59</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>com.google.code.gson</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>htmlunit-driver</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+        <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>net.sourceforge.htmlunit</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+      <version>3.141.59</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>3.141.59</version>
+      <scope>compile</scope>
+    </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -208,6 +216,38 @@
             <artifactId>junit-toolbox</artifactId>
             <version>${junit-toolbox.version}</version>
         </dependency>
+        
+        
+        <!-- Dependency to other MrChecker Test Framework modules -->
+        <!-- Test core module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-core-module</artifactId>
+            <version>${mrchecker-core-module.version}</version>
+        </dependency>
+
+        <!-- Security module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-security-module</artifactId>
+            <version>${mrchecker-security-module.version}</version>
+        </dependency>
+
+        <!-- WebAPI + Service Virtualization module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-webapi-module</artifactId>
+            <version>${mrchecker-webapi-module.version}</version>
+        </dependency>
+        
+        <!-- Mobile module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-mobile-module</artifactId>
+            <version>${mrchecker-mobile-module.version}</version>
+        </dependency>
+        
+        
     </dependencies>
 
 
