@@ -240,6 +240,13 @@
             <version>${mrchecker-webapi-module.version}</version>
         </dependency>
         
+        <!-- Selenium module -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mrchecker-selenium-module</artifactId>
+            <version>${mrchecker-selenium-module.version}</version>
+        </dependency>
+        
         <!-- Mobile module -->
         <dependency>
             <groupId>${project.groupId}</groupId>
