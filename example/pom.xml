@@ -385,7 +385,8 @@
                                     <!-- The directory, which must be in
                                         the root of the runtime classpath,
                                         containing your feature files. -->
-                                    <featuresDirectory>src/test/java/com/capgemini/mrchecker/cucumber/features</featuresDirectory>
+                                    <!-- <featuresDirectory>src/test/java/com/capgemini/mrchecker/cucumber/features</featuresDirectory> -->
+                                    <featuresDirectory>src/test/java/com/capgemini/mythaistar/features</featuresDirectory>
                                     <!-- Directory where the cucumber report
                                         files shall be written -->
                                     <cucumberOutputDir>${project.build.directory}/cucumber</cucumberOutputDir>
